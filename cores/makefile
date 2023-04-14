@@ -1,7 +1,7 @@
 # this logic was broken out from picoarch's all-in-one makefile
 
 CORES = fceumm gambatte gpsp pcsx_rearmed picodrive snes9x2005_plus
-CORES+= beetle-pce-fast beetle-vb fake-08 mednafen_supafaust mgba pokemini # extras
+CORES+= beetle-pce-fast beetle-vb mednafen_supafaust mgba pokemini # extras
 
 ###############################
 
@@ -18,10 +18,6 @@ beetle-pce-fast_CORE = mednafen_pce_fast_libretro.so
 
 beetle-vb_REPO = https://github.com/libretro/beetle-vb-libretro
 beetle-vb_CORE = mednafen_vb_libretro.so
-
-fake-08_REPO = https://github.com/jtothebell/fake-08
-fake-08_CORE = fake08_libretro.so
-fake-08_BUILD_PATH = fake-08/platform/libretro
 
 fceumm_REPO = https://github.com/libretro/libretro-fceumm
 
@@ -67,7 +63,7 @@ output/$(1)_libretro.so: src/$(1)/.patched
 	mv src/$$($1_BUILD_PATH)/$(if $($(1)_CORE),$($(1)_CORE),$(1)_libretro.so) ./output
 
 clone-$(1): src/$(1)
-	
+
 patch-$(1): src/$(1)/.patched
 
 clean-$(1):
@@ -85,9 +81,9 @@ all: cores
 $(foreach CORE,$(CORES),$(eval $(call TEMPLATE,$(CORE))))
 
 cores: $(foreach CORE,$(CORES),$(CORE))
-	
+
 clean: $(foreach CORE,$(CORES),clean-$(CORE))
-	
+
 nuke:
 	rm -rf ./output
 	rm -rf ./src

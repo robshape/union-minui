@@ -6,7 +6,9 @@ top of MinUI.
 
 ![MinUI](./github/minui-menu-gbc.png)
 
-## MinUI features
+## Features
+
+### MinUI features
 
 - Simple launcher, simple SD card
 - No settings or configuration
@@ -33,11 +35,11 @@ top of MinUI.
 
 You can [grab the latest version here](https://github.com/shauninman/union-minui/releases).
 
-## FinUI additional features
+### Additional FinUI features
 
 -
 
-## Installation guide
+## Installation
 
 The following section explains how to install MinUI using macOS, without having to
 download any additional tools.
@@ -54,31 +56,41 @@ for the app `Terminal.app`
 ### Install MinUI
 
 1. Connect your microSD card to your Mac
-2. Start the app `Terminal`
-3. Run the command `diskutil list` and identify your microSD by looking at the `SIZE`
+1. Start the app `Terminal`
+1. Run the command `diskutil list` and identify your microSD by looking at the `SIZE`
 column. It is `/dev/disk4` in this example.
-4. Run the command `diskutil unmountDisk /dev/disk4`
-5. Unzip the RG35XX firmware to your desktop and then run the command `cd ~/Desktop`
+1. Run the command `diskutil unmountDisk /dev/disk4`
+1. Unzip the RG35XX firmware to your desktop and then run the command `cd ~/Desktop`
 in the Terminal
-6. Run the command `sudo dd bs=1m if=35XX-64GB230309EN.IMG of=/dev/disk4` to flash
+1. Run the command `sudo dd bs=1m if=35XX-64GB230309EN.IMG of=/dev/disk4` to flash
 the firmware onto your microSD. Enter your user account password if prompted. Wait.
-7. Run the command `diskutil list` again and identify the largest partition on your
+1. Run the command `diskutil list` again and identify the largest partition on your
 microSD by looking at the `SIZE` column. It is `/dev/disk4s4` in this example. Note
 that it differs from the previous path!
-8. Run `sudo diskutil eraseVolume FAT32 ROMS /dev/disk4s4` to format that partition
+1. Run `sudo diskutil eraseVolume FAT32 ROMS /dev/disk4s4` to format that partition
 as `FAT32` with the name `ROMS`. Enter your user account password if prompted. Wait.
-9. You should now have a `misc` and a `ROMS` disk connected to your Mac. If you
+1. You should now have a `misc` and a `ROMS` disk connected to your Mac. If you
 don't then try reconnecting your microSD card to your Mac.
-10. Unzip the MinUI release to your desktop
-11. Copy `dmenu.bin` to the root of the `misc` disk. Copy `MinUI.zip` and the `Bios`,
+1. Unzip the MinUI release to your desktop
+1. Copy `dmenu.bin` to the root of the `misc` disk. Copy `MinUI.zip` and the `Bios`,
 `Roms`, `Saves` folders to the root of the `ROMS` disk. Optionally, follow the additional
 instructions in the MinUI README if you wish.
-12. Finally, run `dot_clean -m /Volumes/misc` and `dotclean -m /Volumes/ROMS` to
+1. Finally, run `dot_clean -m /Volumes/misc` and `dotclean -m /Volumes/ROMS` to
 remove any dot-underscore files created by macOS on your microSD.
 
 Done. Insert your microSD to your RG35XX and boot it up!
 
-## FinUI TODO
+## Development
+
+### Prerequisites
+
+- [Docker Desktop](https://docker.com/products/docker-desktop)
+
+### Build project
+
+Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
+
+### TODO
 
 - Add "mark as finished" OR "add as favorite" to menu
 - Improve battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)
@@ -87,7 +99,6 @@ Done. Insert your microSD to your RG35XX and boot it up!
 - Adjust recently played count
 - Adjust overclocking
 - Include extras in release by default
-- Move toolchain to repo:  <https://github.com/shauninman/union-rg35xx-toolchain>
 - Release using GitHub action: <https://github.com/JoeStaff/devilutionX/commit/a0fe502e70767ca8e2921d5580d4d4dec9e15cc1>
 - Automate installation guide
 

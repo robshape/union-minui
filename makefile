@@ -47,15 +47,15 @@ bundle:
 	rm -rf ./build
 	mkdir -p ./releases
 	cp -R ./skeleton ./build
-	
+
 	# remove authoring detritus
 	cd ./build && find . -type f -name '.keep' -delete
 	cd ./build && find . -type f -name '*.meta' -delete
-	
+
 	cp ./src/boot/output/dmenu.bin ./build/BASE
 	cp ./src/boot/output/dmenu.bin ./build/SYSTEM/rg35xx/dat
 	cp ./src/install/install.sh ./build/SYSTEM/rg35xx/bin
-	
+
 	# prepare boot logo
 	cd ./build/SYSTEM/rg35xx/dat && convert boot_logo.png -type truecolor boot_logo.bmp && rm boot_logo.png && gzip -n boot_logo.bmp
 
@@ -67,7 +67,7 @@ bundle:
 	cp ./src/overclock/overclock.elf ./build/SYSTEM/rg35xx/bin
 	cp ./src/minui/minui.elf ./build/SYSTEM/rg35xx/paks/MinUI.pak
 	cp ./src/clock/clock.elf ./build/EXTRAS/Tools/rg35xx/Clock.pak
-	
+
 	# stock cores
 	cp ./cores/output/fceumm_libretro.so ./build/SYSTEM/rg35xx/cores
 	cp ./cores/output/gambatte_libretro.so ./build/SYSTEM/rg35xx/cores
@@ -77,7 +77,6 @@ bundle:
 	cp ./cores/output/snes9x2005_plus_libretro.so ./build/SYSTEM/rg35xx/cores
 
 	# extras
-	cp ./cores/output/fake08_libretro.so ./build/EXTRAS/Emus/rg35xx/P8.pak
 	cp ./cores/output/mgba_libretro.so ./build/EXTRAS/Emus/rg35xx/MGBA.pak
 	cp ./cores/output/mgba_libretro.so ./build/EXTRAS/Emus/rg35xx/SGB.pak
 	cp ./cores/output/mednafen_pce_fast_libretro.so ./build/EXTRAS/Emus/rg35xx/PCE.pak
@@ -86,7 +85,7 @@ bundle:
 	cp ./cores/output/pokemini_libretro.so ./build/EXTRAS/Emus/rg35xx/PKM.pak
 	cp ./other/DinguxCommander/output/DinguxCommander ./build/EXTRAS/Tools/rg35xx/Files.pak
 	cp -R ./other/DinguxCommander/res ./build/EXTRAS/Tools/rg35xx/Files.pak/
-	
+
 readmes:
 	fmt -w 40 -s ./skeleton/BASE/README.txt > ./build/BASE/README.txt
 	fmt -w 40 -s ./skeleton/EXTRAS/README.txt > ./build/EXTRAS/README.txt
@@ -96,11 +95,11 @@ zip:
 	./commits.sh > ./build/SYSTEM/commits.txt
 	cd ./build && find . -type f -name '.DS_Store' -delete
 	mkdir -p ./build/PAYLOAD
-	mv ./build/SYSTEM ./build/PAYLOAD/.system	
-	
+	mv ./build/SYSTEM ./build/PAYLOAD/.system
+
 	cd ./build/PAYLOAD && zip -r MinUI.zip .system
 	mv ./build/PAYLOAD/MinUI.zip ./build/BASE
-	
+
 	cd ./build/BASE && zip -r ../../releases/$(RELEASE_NAME)-base.zip Bios Roms Saves dmenu.bin MinUI.zip README.txt
 	cd ./build/EXTRAS && zip -r ../../releases/$(RELEASE_NAME)-extras.zip Bios Emus Roms Saves Tools README.txt
 	echo "$(RELEASE_NAME)" > ./build/latest.txt
@@ -118,4 +117,3 @@ clean:
 	cd ./cores && make clean
 	cd ./src/clock && make clean
 	cd ./other/DinguxCommander && make clean
-	

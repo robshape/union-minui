@@ -1,8 +1,8 @@
 .PHONY: shell
 .PHONY: clean
-	
+
 TOOLCHAIN_NAME=rg35xx-toolchain-new
-WORKSPACE_DIR := $(shell pwd)/workspace
+WORKSPACE_DIR := $(shell cd .. && pwd)
 
 CONTAINER_NAME=$(shell docker ps -f "ancestor=$(TOOLCHAIN_NAME)" --format "{{.Names}}")
 BOLD=$(shell tput bold)
@@ -10,7 +10,6 @@ NORM=$(shell tput sgr0)
 
 .build: Dockerfile
 	$(info $(BOLD)Building $(TOOLCHAIN_NAME)...$(NORM))
-	mkdir -p ./workspace
 	docker build -t $(TOOLCHAIN_NAME) .
 	touch .build
 
@@ -21,7 +20,7 @@ shell: .build
 else
 shell:
 	$(info $(BOLD)Connecting to running $(TOOLCHAIN_NAME)...$(NORM))
-	docker exec -it $(CONTAINER_NAME) /bin/bash  
+	docker exec -it $(CONTAINER_NAME) /bin/bash
 endif
 
 clean:

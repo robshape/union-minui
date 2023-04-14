@@ -1,14 +1,16 @@
-.DS_Store
+build/
+cores/output/
+cores/src/
+private/
+releases/
+src/boot/output/
 
-build
-cores/src
-cores/output
-private
-releases
-src/boot/output
-
+*.dtb
+*.elf
 *.o
 *.so
-*.elf
-*.dtb
 *.zip
+
+.build
+.DS_Store
+rg35xx-toolchain.tar.xz
