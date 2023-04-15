@@ -1,12 +1,19 @@
+**/__pycache__/
+**/glsm/
 build/
 cores/output/
 cores/src/
+other/DinguxCommander/output/
 private/
 releases/
 src/boot/output/
 
+*.[od]
+*.dll
 *.dtb
+*.dylib
 *.elf
+*.exe
 *.o
 *.so
 *.zip
