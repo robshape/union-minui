@@ -98,7 +98,6 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 - Add Clear Recent setting: <https://github.com/dingmah/MiniUI-Tool-Clear-Recently-Played-List>
 - Adjust recently played count
 - Adjust overclocking
-- Include extras in release by default
 - Release using GitHub action: <https://github.com/JoeStaff/devilutionX/commit/a0fe502e70767ca8e2921d5580d4d4dec9e15cc1>
 - Automate installation
 

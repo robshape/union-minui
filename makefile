@@ -102,6 +102,13 @@ zip:
 
 	cd ./build/BASE && zip -r ../../releases/$(RELEASE_NAME)-base.zip Bios Roms Saves dmenu.bin MinUI.zip README.txt
 	cd ./build/EXTRAS && zip -r ../../releases/$(RELEASE_NAME)-extras.zip Bios Emus Roms Saves Tools README.txt
+
+	rm -fr ./build/FULL
+	mkdir ./build/FULL
+	cp -fR ./build/BASE/* ./build/FULL/
+	cp -fR ./build/EXTRAS/* ./build/FULL/
+	cd ./build/FULL && zip -r ../../releases/$(RELEASE_NAME)-full.zip Bios Emus Roms Saves Tools dmenu.bin MinUI.zip
+
 	echo "$(RELEASE_NAME)" > ./build/latest.txt
 
 report:
