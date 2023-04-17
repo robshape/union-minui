@@ -37,16 +37,20 @@ You can [grab the latest version here](https://github.com/shauninman/union-minui
 
 ### Additional FinUI features
 
--
+- Clear Recently Played
+- All extras included in default installation
+- Improved developer onboarding
 
 ## Installation
 
 The following section explains how to install MinUI using macOS, without having to
-download any additional tools.
+download any additional tools. These instructions currently only work with 64GB microSD
+cards. Other sizes require additional partitioning steps that this guide does not
+cover yet.
 
 ### Prerequisites
 
-- A new 64GB microSD card from a reputable brand
+- A new **64GB microSD card** from a reputable brand
 - The offical Anbernic RG355XX firmware (`35XX-64GB230309EN.IMG`)
 - A [MinUI release](https://github.com/shauninman/union-minui/releases)
 - An [administrator user account](https://support.apple.com/guide/mac-help/change-users-groups-settings-mtusr001/mac)
@@ -73,9 +77,9 @@ as `FAT32` with the name `ROMS`. Enter your user account password if prompted. W
 don't then try reconnecting your microSD card to your Mac.
 1. Unzip the MinUI release to your desktop
 1. Copy `dmenu.bin` to the root of the `misc` disk. Copy `MinUI.zip` and the `Bios`,
-`Roms`, `Saves` folders to the root of the `ROMS` disk. Optionally, follow the additional
-instructions in the MinUI README if you wish.
-1. Finally, run `dot_clean -m /Volumes/misc` and `dotclean -m /Volumes/ROMS` to
+`Emus`, `Roms`, `Saves`, `Tools` folders to the root of the `ROMS` disk. Optionally,
+follow the additional instructions in the MinUI README if you wish.
+1. Finally, run `dot_clean -m /Volumes/misc` and `dot_clean -m /Volumes/ROMS` to
 remove any dot-underscore files created by macOS on your microSD.
 
 Done. Insert your microSD to your RG35XX and boot it up!
@@ -92,14 +96,17 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 
 ### TODO
 
+- ~~Add macOS CLI installation instructions~~
+- ~~Move toolchain to repo~~
+- ~~Include extras in release by default~~
+- ~~Add Clear Recent setting~~
+- ~~Refactor Tools to Settings~~
 - Add "mark as finished" OR "add as favorite" to menu
 - Improve battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)
-- Refactor Tools to Settings
-- ~~Add Clear Recent setting: <https://github.com/dingmah/MiniUI-Tool-Clear-Recently-Played-List>~~
-- Adjust recently played count
 - Adjust overclocking
-- Release using GitHub action: <https://github.com/JoeStaff/devilutionX/commit/a0fe502e70767ca8e2921d5580d4d4dec9e15cc1>
-- Automate installation
+- Update Installation instructions for microSD cards of all sizes
+- Automate installation and update
+- Release using GitHub Actions
 
 ## Disclaimer
 
