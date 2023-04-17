@@ -40,6 +40,7 @@ all-cores:
 
 tools:
 	cd ./src/clock && make
+	cd ./src/clear_recent && make
 	cd ./other/DinguxCommander && make -j
 
 bundle:
@@ -67,6 +68,7 @@ bundle:
 	cp ./src/overclock/overclock.elf ./build/SYSTEM/rg35xx/bin
 	cp ./src/minui/minui.elf ./build/SYSTEM/rg35xx/paks/MinUI.pak
 	cp ./src/clock/clock.elf ./build/EXTRAS/Tools/rg35xx/Clock.pak
+	cp ./src/clear_recent/clear_recent.elf ./build/EXTRAS/Tools/rg35xx/ClearRecent.pak
 
 	# stock cores
 	cp ./cores/output/fceumm_libretro.so ./build/SYSTEM/rg35xx/cores
@@ -123,4 +125,5 @@ clean:
 	cd ./src/boot && rm -rf ./output
 	cd ./cores && make clean
 	cd ./src/clock && make clean
+	cd ./src/clear_recent && make clean
 	cd ./other/DinguxCommander && make clean
