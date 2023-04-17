@@ -116,3 +116,7 @@ out of, or in connection with this software, the use of this software, or other
 dealings with this software.
 
 Use at your own risk.
+
+## Contributors
+
+@robshape @guiburi
