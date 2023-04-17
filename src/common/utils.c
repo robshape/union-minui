@@ -65,6 +65,11 @@ void getDisplayName(const char* in_name, char* out_name) {
 	tmp = out_name + strlen(out_name) - 1;
     while(tmp>out_name && isspace((unsigned char)*tmp)) tmp--;
     tmp[1] = '\0';
+
+  // display "Tools" as "Settings"...
+  if (!strcmp("Tools", out_name)) {
+    strcpy(out_name, "Settings");
+  }
 }
 void getEmuName(const char* in_name, char* out_name) { // NOTE: both char arrays need to be MAX_PATH length!
 	char* tmp;

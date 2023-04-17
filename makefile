@@ -68,7 +68,7 @@ bundle:
 	cp ./src/overclock/overclock.elf ./build/SYSTEM/rg35xx/bin
 	cp ./src/minui/minui.elf ./build/SYSTEM/rg35xx/paks/MinUI.pak
 	cp ./src/clock/clock.elf ./build/EXTRAS/Tools/rg35xx/Clock.pak
-	cp ./src/clear_recent/clear_recent.elf ./build/EXTRAS/Tools/rg35xx/ClearRecent.pak
+	cp ./src/clear_recent/clear_recent.elf "./build/EXTRAS/Tools/rg35xx/Clear Recently Played.pak"
 
 	# stock cores
 	cp ./cores/output/fceumm_libretro.so ./build/SYSTEM/rg35xx/cores
