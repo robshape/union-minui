@@ -106,6 +106,7 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 - Adjust overclocking
 - Update Installation instructions for microSD cards of all sizes
 - Automate installation and update
+- Update visible MinUI strings and boot logo (show that it is the FinUI fork)
 - Release using GitHub Actions
 
 ## Disclaimer
