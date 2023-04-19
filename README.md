@@ -108,6 +108,7 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 - Automate installation and update
 - Update visible MinUI strings and boot logo (show that it is the FinUI fork)
 - Release using GitHub Actions
+- [...Things in the old todo?...](./todo.txt)
 
 ## Disclaimer
 
@@ -120,4 +121,4 @@ Use at your own risk.
 
 ## Contributors
 
-@robshape @guiburi
+robshape, guiburi
