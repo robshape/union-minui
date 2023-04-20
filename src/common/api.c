@@ -1392,8 +1392,13 @@ static void POW_updateBatteryStatus(void) {
 	pow.is_charging = getInt("/sys/class/power_supply/battery/charger_online");
 	
 	// TODO: newer batteries have a different range, ???-???
-	int i = getInt("/sys/class/power_supply/battery/voltage_now") / 10000; // 310-410
-	i -= 310; 	// ~0-100
+	// int i = getInt("/sys/class/power_supply/battery/voltage_now") / 10000; // 310-410
+	// i -= 310; 	// ~0-100
+
+
+	// Battery ramp is wrong for bigger batteries. Need to log drain for 2600 mAh, 3500 mAh, and
+	// update range.  Reading /capacity seems more accurate for 2600 mAh.
+	int i = getInt("/sys/class/power_supply/battery/capacity");
 
 	// worry less about battery and more about the game you're playing
 	     if (i>80) pow.charge = 100;
