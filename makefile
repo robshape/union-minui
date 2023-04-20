@@ -118,6 +118,7 @@ report:
 
 clean:
 	rm -rf ./build
+	rm -rf ./releases
 	cd ./src/libmsettings && make clean
 	cd ./src/keymon && make clean
 	cd ./src/minui && make clean

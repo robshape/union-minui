@@ -112,7 +112,7 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 - ~~Include extras in release by default~~
 - ~~Add Clear Recent setting~~
 - ~~Refactor Tools to Settings~~
-- Add "mark as finished" OR "add as favorite" to menu
+- Add to Favorites
 - Improve battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)
 - Adjust overclocking
 - Update Installation instructions for microSD cards of all sizes
