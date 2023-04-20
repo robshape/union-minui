@@ -1399,6 +1399,10 @@ static void POW_updateBatteryStatus(void) {
 	// Battery ramp is wrong for bigger batteries. Need to log drain for 2600 mAh, 3500 mAh, and
 	// update range.  Reading /capacity seems more accurate for 2600 mAh.
 	int i = getInt("/sys/class/power_supply/battery/capacity");
+	if (i == 0) { // Initial reading is incorrect...
+		pow.charge = 100;
+		return;
+	}
 
 	// worry less about battery and more about the game you're playing
 	     if (i>80) pow.charge = 100;
