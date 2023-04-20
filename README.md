@@ -79,8 +79,19 @@ don't then try reconnecting your microSD card to your Mac.
 1. Copy `dmenu.bin` to the root of the `misc` disk. Copy `MinUI.zip` and the `Bios`,
 `Emus`, `Roms`, `Saves`, `Tools` folders to the root of the `ROMS` disk. Optionally,
 follow the additional instructions in the MinUI README if you wish.
-1. Finally, run `dot_clean -m /Volumes/misc` and `dot_clean -m /Volumes/ROMS` to
-remove any dot-underscore files created by macOS on your microSD.
+1. Finally, to remove dotfiles created by macOS on your microSD, run:
+
+```shell
+dot_clean -m /Volumes/misc
+rm -fr /Volumes/misc/.feventsd
+rm -fr /Volumes/misc/.Spotlight-V100
+rm -fr /Volumes/misc/.Trashes
+
+dot_clean -m /Volumes/ROMS
+rm -fr /Volumes/ROMS/.feventsd
+rm -fr /Volumes/ROMS/.Spotlight-V100
+rm -fr /Volumes/ROMS/.Trashes
+```
 
 Done. Insert your microSD to your RG35XX and boot it up!
 
