@@ -67,6 +67,7 @@
 #define AUTO_RESUME_SLOT 9
 
 #define TRIAD_WHITE 		0xff,0xff,0xff
+#define TRIAD_GOLD	 	0xd2,0xb4,0x6c
 #define TRIAD_BLACK 		0x00,0x00,0x00
 #define TRIAD_LIGHT_GRAY 	0x7f,0x7f,0x7f
 #define TRIAD_GRAY 			0x99,0x99,0x99
@@ -76,6 +77,7 @@
 #define TRIAD_DARK_TEXT 	0x66,0x66,0x66
 
 #define COLOR_WHITE			(SDL_Color){TRIAD_WHITE}
+#define COLOR_GOLD			(SDL_Color){TRIAD_GOLD}
 #define COLOR_GRAY			(SDL_Color){TRIAD_GRAY}
 #define COLOR_BLACK			(SDL_Color){TRIAD_BLACK}
 #define COLOR_LIGHT_TEXT	(SDL_Color){TRIAD_LIGHT_TEXT}

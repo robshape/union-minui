@@ -462,6 +462,11 @@ static void toggleFavorite(char* path) {
 	}
 	saveFavorites();
 }
+static int isFavorite(char *path) {
+	path += strlen(SDCARD_PATH); // makes paths platform agnostic
+	int id = FavoriteArray_indexOf(favorites, path);
+	return ++id;
+}
 
 static int hasEmu(char* emu_name) {
 	char pak_path[256];
@@ -1527,6 +1532,9 @@ int main (int argc, char *argv[]) {
 						if (i==top->start) available_width -= ow;
 					
 						SDL_Color text_color = COLOR_WHITE;
+						if (isFavorite(entry->path)) {
+							text_color = COLOR_GOLD;
+						}
 					
 						trimSortingMeta(&entry_name);
 					
