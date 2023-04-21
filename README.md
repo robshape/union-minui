@@ -37,9 +37,17 @@ You can [grab the latest version here](https://github.com/shauninman/union-minui
 
 ### Additional FinUI features
 
+- Add to Favorites
 - Clear Recently Played
 - All extras included in default installation
 - Improved developer onboarding
+
+### Shortcuts
+
+| Description                  | Shortcut                     |
+| ---------------------------- | ---------------------------- |
+| Adjust brightness            | MENU + VOLUME_DOWN/VOLUME_UP |
+| Add to Favorites (from menu) | SELECT                       |
 
 ## Installation
 
@@ -112,9 +120,9 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 - ~~Include extras in release by default~~
 - ~~Add Clear Recent setting~~
 - ~~Refactor Tools to Settings~~
-- Add to Favorites
+- ~~Add to Favorites~~
 - Improve battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)
-- Adjust overclocking
+- Adjust overclocking and CPU usage (to maximize battery life)
 - Update Installation instructions for microSD cards of all sizes
 - Automate installation and update
 - Update visible MinUI strings and boot logo (show that it is the FinUI fork)
