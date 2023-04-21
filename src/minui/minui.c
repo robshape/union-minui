@@ -388,6 +388,16 @@ static void FavoriteArray_free(Array* self) {
 	}
 	Array_free(self);
 }
+static int FavoriteArray_splice(Array* self, int index) {
+	if (index != -1) {
+		for(int i=index; i<self->count-1; i++) {
+			self->items[i] = self->items[i+1];
+		}
+		--self->count;
+		return index;
+	}
+	return -1;
+}
 
 ///////////////////////////////////////
 
@@ -457,8 +467,9 @@ static void toggleFavorite(char* path) {
 	if (id==-1) { // add
 		Array_unshift(favorites, Favorite_new(path));
 	}
-	else if (id>0) { // remove
-		// TODO: remove from favorite
+
+	else { // remove
+		FavoriteArray_splice(favorites, id);
 	}
 	saveFavorites();
 }
