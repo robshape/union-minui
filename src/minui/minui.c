@@ -1560,6 +1560,9 @@ int main (int argc, char *argv[]) {
 								SCALE1(PILL_SIZE)
 							});
 							text_color = COLOR_BLACK;
+							if (isFavorite(entry->path)) {
+								text_color = COLOR_GOLD;
+							}
 						}
 						else if (entry->unique) {
 							trimSortingMeta(&entry_unique);
