@@ -394,9 +394,8 @@ static int FavoriteArray_splice(Array* self, int index) {
 			self->items[i] = self->items[i+1];
 		}
 		--self->count;
-		return index;
 	}
-	return -1;
+	return index;
 }
 
 ///////////////////////////////////////
@@ -466,9 +465,7 @@ static void toggleFavorite(char* path) {
 	int id = FavoriteArray_indexOf(favorites, path);
 	if (id==-1) { // add
 		Array_unshift(favorites, Favorite_new(path));
-	}
-
-	else { // remove
+	} else { // remove
 		FavoriteArray_splice(favorites, id);
 	}
 	saveFavorites();
