@@ -39,6 +39,7 @@ You can [grab the latest version here](https://github.com/shauninman/union-minui
 
 - Add to Favorites
 - Clear Recently Played
+- Adjusted battery readings for 2100, 2600 and 3500 mAh batteries
 - All extras included in default installation
 - Improved developer onboarding
 
@@ -121,13 +122,13 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 - ~~Add Clear Recent setting~~
 - ~~Refactor Tools to Settings~~
 - ~~Add to Favorites~~
-- Improve battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)
-- Adjust overclocking and CPU usage (to maximize battery life)
-- Update Installation instructions for microSD cards of all sizes
+- ~~Adjust battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)~~
 - Automate installation and update
 - Update visible MinUI strings and boot logo (show that it is the FinUI fork)
 - Release using GitHub Actions
-- [...Things in the old todo?...](./todo.txt)
+- Adjust overclocking and CPU usage (to maximize battery life)
+- Improve battery capacity reading accuracy
+- [...things in the old todo?...](./todo.txt)
 
 ## Disclaimer
 
@@ -140,4 +141,4 @@ Use at your own risk.
 
 ## Contributors
 
-robshape, guiburi
+@robshape @guiburi

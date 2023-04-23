@@ -59,6 +59,7 @@
 #define FAVORITE_PATH USERDATA_PATH "/.minui/favorite.txt"
 #define FAUX_FAVORITE_PATH SDCARD_PATH "/Favorites"
 #define COLLECTIONS_PATH SDCARD_PATH "/Collections"
+#define BATTERY_PATH SDCARD_PATH "/battery.txt"
 
 #define LAST_PATH "/tmp/last.txt" // transient
 #define CHANGE_DISC_PATH "/tmp/change_disc.txt"

@@ -1388,21 +1388,35 @@ static void POW_quitOverlay(void) {
 	ioctl(gfx.fd_fb, OWLFB_OVERLAY_DISABLE, &pow.oargs);
 }
 
+static int POW_readBatteryStatus(void) {
+	#define BATTERY_2100MAH 1
+	#define BATTERY_2600MAH 2
+	#define BATTERY_3500MAH 3
+
+	int battery = BATTERY_2600MAH; // Default
+	int battery_txt = getInt(BATTERY_PATH);
+	if (battery_txt > 0) {
+		battery = battery_txt;
+	}
+
+	int voltage_now = getInt("/sys/class/power_supply/battery/voltage_now");
+
+	if (battery == BATTERY_2100MAH) {
+		return ((voltage_now / 10000) - 310); // 310-410
+	} else if (battery == BATTERY_2600MAH) {
+		return ((voltage_now / 10000) - 308); // 308-413? Seems incorrect...
+	} else if (battery == BATTERY_3500MAH) {
+		// ???-???
+	}
+
+	// Fallback
+	return getInt("/sys/class/power_supply/battery/capacity");
+}
+
 static void POW_updateBatteryStatus(void) {
 	pow.is_charging = getInt("/sys/class/power_supply/battery/charger_online");
-	
-	// TODO: newer batteries have a different range, ???-???
-	// int i = getInt("/sys/class/power_supply/battery/voltage_now") / 10000; // 310-410
-	// i -= 310; 	// ~0-100
 
-
-	// Battery ramp is wrong for bigger batteries. Need to log drain for 2600 mAh, 3500 mAh, and
-	// update range.  Reading /capacity seems more accurate for 2600 mAh.
-	int i = getInt("/sys/class/power_supply/battery/capacity");
-	if (i == 0) { // Initial reading is incorrect...
-		pow.charge = 100;
-		return;
-	}
+	int i = POW_readBatteryStatus();
 
 	// worry less about battery and more about the game you're playing
 	     if (i>80) pow.charge = 100;
