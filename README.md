@@ -4,7 +4,7 @@ FinUI is a fork of [MinUI](https://github.com/shauninman/union-minui). MinUI is 
 focused custom launcher for the Anbernic RG35XX. FinUI adds additional features on
 top of MinUI.
 
-![MinUI](./github/minui-menu-gbc.png)
+![FinUI](./github/minui-menu-gbc.png)
 
 ## Features
 
@@ -32,8 +32,6 @@ top of MinUI.
   the launcher instead of A
 - Streamlined emulator frontend
   (minarch + libretro cores)
-
-You can [grab the latest version here](https://github.com/shauninman/union-minui/releases).
 
 ### Additional FinUI features
 
@@ -69,7 +67,7 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 - ~~Refactor Tools to Settings~~
 - ~~Add to Favorites~~
 - ~~Adjust battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)~~
-- Update visible MinUI strings and boot logo (show that it is the FinUI fork)
+- ~~Update visible MinUI strings (show that it is the FinUI fork)~~
 - Release using GitHub Actions
 - Adjust overclocking and CPU usage (to maximize battery life)
 - Improve battery capacity reading accuracy
