@@ -1,0 +1,15 @@
+name: C/C++ CI
+
+on:
+  push:
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run script file
+        run: |
+          chmod +x ./start-toolchain.sh
+          ./start-toolchain.sh
+        shell: bash
