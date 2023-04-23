@@ -1,0 +1,73 @@
+################
+# Installation #
+################
+
+The following guide explains how to install FinUI using macOS, without having to download additional
+software. These instructions only work with 64GB microSD cards. Other sizes require partitioning
+steps that this guide does not cover yet.
+
+#################
+# Prerequisites #
+#################
+
+- A new 64GB microSD card from a reputable brand
+- The official Anbernic RG355XX firmware (35XX-64GB230309EN.IMG)
+- A FinUI release
+- A user account with administrator privileges (https://support.apple.com/guide/mac-help/change-users-groups-settings-mtusr001/mac)
+- Full Disk Access for the app "Terminal" (https://support.apple.com/guide/mac-help/change-privacy-security-settings-on-mac-mchl211c911f/13.0/mac/13.0)
+
+#################
+# Install FinUI #
+#################
+
+1. Connect your microSD card to your Mac
+
+2. Start the app "Terminal"
+
+3. Run the command "diskutil list" and identify your microSD by looking at the "SIZE" column. It is
+"/dev/disk4" in this example.
+
+4. Run the command "diskutil unmountDisk /dev/disk4"
+
+5. Unzip the RG35XX firmware to your desktop and then run the command "cd ~/Desktop"
+
+6. Run the command "sudo dd bs=1m if=35XX-64GB230309EN.IMG of=/dev/disk4" to flash the firmware onto
+your microSD. Enter your user account password if prompted. Wait.
+
+7. Run the command "diskutil list" again and identify the largest partition on your microSD by
+looking at the "SIZE" column. It is "/dev/disk4s4" in this example. Note that this path differs from
+the previous path!
+
+8. Run the command "sudo diskutil eraseVolume FAT32 ROMS /dev/disk4s4" to format that partition as
+"FAT32" with the name "ROMS". Enter your user account password if prompted. Wait.
+
+9. You should now have a "misc" and a "ROMS" disk connected to your Mac. If you do not then try to
+reconnect your microSD.
+
+10. Unzip the FinUI release to your desktop
+
+11. From the release, copy "dmenu.bin" to the root of the "misc" disk. Then copy "MinUI.zip" and the
+"Bios", "Emus", "Roms", "Saves", "Tools" folders to the root of the "ROMS" disk.
+
+12. Finally, to clean up you microSD, run the following commands:
+
+dot_clean -m /Volumes/misc
+dot_clean -m /Volumes/ROMS
+rm -fr /Volumes/misc/.feventsd /Volumes/misc/.Spotlight-V100 /Volumes/misc/.Trashes
+rm -fr /Volumes/ROMS/.feventsd /Volumes/ROMS/.Spotlight-V100 /Volumes/ROMS/.Trashes
+
+Done. Insert your microSD to your RG35XX and boot it up!
+
+######################
+# Update FinUI/MinUI #
+######################
+
+1. Connect your microSD card, containing your existing FinUI/MinUI installation, to your computer
+
+2. Unzip the latest FinUI release
+
+3. From the release, copy and replace "dmenu.bin" in the root of the "misc" disk. Then copy and
+replace "MinUI.zip" and the "Bios", "Emus", "Roms", "Saves", "Tools" folders in the root of the
+"ROMS" disk.
+
+Done. Insert your microSD to your RG35XX and boot it up!

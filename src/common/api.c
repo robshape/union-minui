@@ -1404,7 +1404,7 @@ static int POW_readBatteryStatus(void) {
 	if (battery == BATTERY_2100MAH) {
 		return ((voltage_now / 10000) - 310); // 310-410
 	} else if (battery == BATTERY_2600MAH) {
-		return ((voltage_now / 10000) - 308); // 308-413? Seems incorrect...
+		return ((voltage_now / 10000) - 308); // 308-414? Seems incorrect...
 	} else if (battery == BATTERY_3500MAH) {
 		// ???-???
 	}
