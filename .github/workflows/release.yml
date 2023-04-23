@@ -2,7 +2,8 @@ name: C/C++ CI
 
 on:
   push:
-    
+    branches:
+      - '*'
 jobs:
   build:
     runs-on: ubuntu-latest
