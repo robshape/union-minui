@@ -27,6 +27,7 @@ jobs:
           image: rg35xx-toolchain-new:latest
           options: -v ${{github.workspace}}:/root/workspace
           run: make all
+          shell: bash
 
       - name: Create release
         run: |
