@@ -41,13 +41,6 @@ top of MinUI.
 - All extras included in default installation
 - Improved developer onboarding
 
-### Shortcuts
-
-| Description                  | Shortcut                     |
-| ---------------------------- | ---------------------------- |
-| Adjust brightness            | MENU + VOLUME_DOWN/VOLUME_UP |
-| Add to Favorites (from menu) | SELECT                       |
-
 ## Development
 
 ### Prerequisites

@@ -1,0 +1,8 @@
+#############
+# Shortcuts #
+#############
+
+| Description                  | Shortcut                     |
+| ---------------------------- | ---------------------------- |
+| Adjust brightness            | MENU + VOLUME_DOWN/VOLUME_UP |
+| Add to Favorites (from menu) | SELECT                       |
