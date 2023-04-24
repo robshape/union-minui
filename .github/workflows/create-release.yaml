@@ -26,8 +26,12 @@ jobs:
         with:
           image: rg35xx-toolchain-new:latest
           options: -v ${{github.workspace}}:/root/workspace
-          run: make all
-          shell: bash
+          run: |
+            export CROSS_COMPILE=/opt/rg35xx-toolchain/usr/bin/arm-buildroot-linux-gnueabihf-
+            export PATH="/opt/rg35xx-toolchain/usr/bin:${PATH}:/opt/rg35xx-toolchain/usr/arm-buildroot-linux-gnueabihf/sysroot/bin"
+            export PREFIX=/opt/rg35xx-toolchain/usr/arm-buildroot-linux-gnueabihf/sysroot/usr
+            export UNION_PLATFORM=rg35xx
+            make all
 
       - name: Create release
         run: |
