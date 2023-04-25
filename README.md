@@ -36,10 +36,11 @@ top of MinUI.
 ### Additional FinUI features
 
 - Add to Favorites
-- Clear Recently Played
-- Adjusted battery readings for 2100, 2600 and 3500 mAh batteries
-- All extras included in default installation
-- Improved developer onboarding
+- Clear "Recently Played"
+- Initial adjustment of battery readings
+- Base and all extras are now included in one full release
+- Includes native installation instructions for macOS
+- Developer experience improvements
 
 ## Development
 
@@ -53,15 +54,6 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 
 ### TODO
 
-- ~~Add macOS CLI installation instructions~~
-- ~~Move toolchain to repo~~
-- ~~Include extras in release by default~~
-- ~~Add Clear Recent setting~~
-- ~~Refactor Tools to Settings~~
-- ~~Add to Favorites~~
-- ~~Adjust battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)~~
-- ~~Update visible MinUI strings (show that it is the FinUI fork)~~
-- ~~Release using GitHub Actions~~
 - Adjust overclocking and CPU usage (to maximize battery life)
 - Improve battery capacity reading accuracy
 - [...things in the old todo?...](./todo.txt)
