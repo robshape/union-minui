@@ -45,13 +45,11 @@ jobs:
         id: tag_version
         with:
           custom_tag: ${{env.GIT_TAG}}
-          dry_run: true
           github_token: ${{secrets.GITHUB_TOKEN}}
 
       - name: Create GitHub release
         uses: ncipollo/release-action@v1.12.0
         with:
           artifacts: "releases/*b-0-full.zip"
-          draft: true
           prerelease: true
           tag: ${{steps.tag_version.outputs.new_tag}}
