@@ -61,7 +61,7 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 - ~~Add to Favorites~~
 - ~~Adjust battery capacity readings (2100 mAh, 2600 mAh, 3500 mAh)~~
 - ~~Update visible MinUI strings (show that it is the FinUI fork)~~
-- Release using GitHub Actions
+- ~~Release using GitHub Actions~~
 - Adjust overclocking and CPU usage (to maximize battery life)
 - Improve battery capacity reading accuracy
 - [...things in the old todo?...](./todo.txt)

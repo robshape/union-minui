@@ -1,5 +1,7 @@
 name: Build and release
 on: workflow_dispatch
+permissions:
+  contents: write
 
 jobs:
   build-and-release:
@@ -33,7 +35,23 @@ jobs:
             export UNION_PLATFORM=rg35xx
             make all
 
-      - name: Create release
+      - name: Name Git tag
         run: |
-          ls -a ./releases/
-          echo "TODO"
+          export GIT_TAG=$(cat ./build/latest.txt)
+          echo "GIT_TAG=$GIT_TAG" >> $GITHUB_ENV
+
+      - name: Create Git tag
+        uses: mathieudutour/github-tag-action@v6.1
+        id: tag_version
+        with:
+          custom_tag: ${{env.GIT_TAG}}
+          dry_run: true
+          github_token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Create GitHub release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          artifacts: "releases/*b-0-full.zip"
+          draft: true
+          prerelease: true
+          tag: ${{steps.tag_version.outputs.new_tag}}
