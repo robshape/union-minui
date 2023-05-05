@@ -51,5 +51,6 @@ jobs:
         uses: ncipollo/release-action@v1.12.0
         with:
           artifacts: "releases/*b-0-full.zip"
+          makeLatest: true
           prerelease: true
           tag: ${{steps.tag_version.outputs.new_tag}}
