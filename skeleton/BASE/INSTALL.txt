@@ -13,8 +13,8 @@ steps that this guide does not cover yet.
 - A new 64GB microSD card from a reputable brand
 - The official Anbernic RG355XX firmware (35XX-64GB230309EN.IMG)
 - A FinUI release
-- A user account with administrator privileges (https://support.apple.com/guide/mac-help/change-users-groups-settings-mtusr001/mac)
-- Full Disk Access for the app "Terminal" (https://support.apple.com/guide/mac-help/change-privacy-security-settings-on-mac-mchl211c911f/13.0/mac/13.0)
+- A user account with administrator privileges (https://support.apple.com/guide/mac-help/change-users-groups-settings-mtusr001/mac/)
+- Full Disk Access for the app "Terminal" (https://support.apple.com/guide/mac-help/change-privacy-security-settings-on-mac-mchl211c911f/13.0/mac/13.0/)
 
 #################
 # Install FinUI #
@@ -53,8 +53,8 @@ reconnect your microSD.
 
 dot_clean -m /Volumes/misc
 dot_clean -m /Volumes/ROMS
-rm -fr /Volumes/misc/.feventsd /Volumes/misc/.Spotlight-V100 /Volumes/misc/.Trashes
-rm -fr /Volumes/ROMS/.feventsd /Volumes/ROMS/.Spotlight-V100 /Volumes/ROMS/.Trashes
+rm -fr /Volumes/misc/.fseventsd /Volumes/misc/.Spotlight-V100 /Volumes/misc/.Trashes
+rm -fr /Volumes/ROMS/.fseventsd /Volumes/ROMS/.Spotlight-V100 /Volumes/ROMS/.Trashes
 
 Done. Insert your microSD to your RG35XX and boot it up!
 

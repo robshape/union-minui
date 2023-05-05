@@ -1,8 +1,8 @@
 # FinUI
 
-FinUI is a fork of [MinUI](https://github.com/shauninman/union-minui). MinUI is a
-focused custom launcher for the Anbernic RG35XX. FinUI adds additional features on
-top of MinUI.
+FinUI is a fork of [MinUI](https://github.com/shauninman/union-minui/). MinUI is
+a focused custom launcher for the Anbernic RG35XX. FinUI adds additional features
+on top of MinUI.
 
 ![FinUI](./github/minui-menu-gbc.png)
 
@@ -37,16 +37,16 @@ top of MinUI.
 
 - Add to Favorites
 - Clear "Recently Played"
-- Initial adjustment of battery readings
-- Base and all extras are now included in one full release
-- Includes native installation instructions for macOS
+- Adjustment of battery readings
+- Base and extras are now all included in one full release
+- Includes native installation instructions using macOS
 - Developer experience improvements
 
 ## Development
 
 ### Prerequisites
 
-- [Docker Desktop](https://docker.com/products/docker-desktop)
+- [Docker Desktop](https://docker.com/products/docker-desktop/)
 
 ### Build project
 
@@ -56,6 +56,7 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 
 - Adjust overclocking and CPU usage (to maximize battery life)
 - Improve battery capacity reading accuracy
+- Show battery percentage number overlay
 - [...things in the old todo?...](./todo.txt)
 
 ## Disclaimer
@@ -66,7 +67,3 @@ out of, or in connection with this software, the use of this software, or other
 dealings with this software.
 
 Use at your own risk.
-
-## Contributors
-
-@robshape @guiburi
