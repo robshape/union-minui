@@ -231,10 +231,11 @@ int POW_preventAutosleep(void);
 int POW_isCharging(void);
 int POW_getBattery(void);
 
-#define CPU_SPEED_MENU			 504000 // 240000 had latency issues
-#define CPU_SPEED_POWERSAVE 	1104000
-#define CPU_SPEED_NORMAL 		1296000
-#define CPU_SPEED_PERFORMANCE	1488000
+#define CPU_SPEED_MENU			 504000 // 500 MHz
+#define CPU_SPEED_POWERSAVE 	840000 // 840 MHz
+#define CPU_SPEED_NORMAL 		1008000 // 1 GHz (Anbernic default max)
+#define CPU_SPEED_PERFORMANCE	1488000 // 1.5 GHz
+// Reference overclock.c
 void POW_setCPUSpeed(int speed);
 
 ///////////////////////////////
