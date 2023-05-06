@@ -1,7 +1,7 @@
 .PHONY: shell
 .PHONY: clean
 
-TOOLCHAIN_NAME=rg35xx-toolchain-new
+TOOLCHAIN_NAME=rg35xx-toolchain
 WORKSPACE_DIR := $(shell cd .. && pwd)
 
 CONTAINER_NAME=$(shell docker ps -f "ancestor=$(TOOLCHAIN_NAME)" --format "{{.Names}}")
