@@ -54,9 +54,9 @@ Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 
 ### TODO
 
-- Adjust overclocking and CPU usage (to maximize battery life)
 - Improve battery capacity reading accuracy
 - Show battery percentage number overlay
+- Change boot logo
 - [...things in the old todo?...](./todo.txt)
 
 ## Disclaimer

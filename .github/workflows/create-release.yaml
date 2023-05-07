@@ -21,12 +21,12 @@ jobs:
           cache-to: type=gha,mode=max
           context: ./toolchain/
           load: true
-          tags: rg35xx-toolchain-new:latest
+          tags: rg35xx-toolchain:latest
 
       - name: Build project
         uses: addnab/docker-run-action@v3
         with:
-          image: rg35xx-toolchain-new:latest
+          image: rg35xx-toolchain:latest
           options: -v ${{github.workspace}}:/root/workspace
           run: |
             export CROSS_COMPILE=/opt/rg35xx-toolchain/usr/bin/arm-buildroot-linux-gnueabihf-
