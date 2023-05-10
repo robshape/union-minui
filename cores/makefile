@@ -1,7 +1,7 @@
 # this logic was broken out from picoarch's all-in-one makefile
 
 CORES = fceumm gambatte gpsp pcsx_rearmed picodrive snes9x2005_plus
-CORES+= beetle-pce-fast beetle-vb mednafen_supafaust mgba pokemini # extras
+CORES+= beetle-pce-fast beetle-vb mednafen_supafaust mgba pokemini fbalpha2012_neogeo # extras
 
 ###############################
 
@@ -35,6 +35,8 @@ pokemini_MAKEFILE = Makefile.libretro
 
 snes9x2005_plus_REPO = https://github.com/libretro/snes9x2005
 snes9x2005_plus_FLAGS = USE_BLARGG_APU=1
+
+fbalpha2012_neogeo_CORE=fbalpha2012_neogeo_libretro.so
 
 ###############################
 

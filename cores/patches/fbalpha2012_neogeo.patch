@@ -1,0 +1,32 @@
+diff --git forkSrcPrefix/makefile.libretro forkDstPrefix/makefile.libretro
+index d426c71..edda865 100755
+--- forkSrcPrefix/makefile.libretro
++++ forkDstPrefix/makefile.libretro
+@@ -168,6 +168,27 @@ else ifeq ($(platform), qnx)
+    AR = qcc -Vgcc_ntoarmv7le
+    PLATFORM_DEFINES := -D__BLACKBERRY_QNX__ -marm -mcpu=cortex-a9 -mfpu=neon -mfloat-abi=softfp
+ 
++# RG35XX
++else ifeq ($(platform), rg35xx)
++   TARGET := $(TARGET_NAME)_libretro.so
++   CC = $(CROSS_COMPILE)gcc
++   CXX = $(CROSS_COMPILE)g++
++   AR = $(CROSS_COMPILE)ar
++   SHARED := -shared -Wl,--version-script=$(LIBRETRO_DIR)/link.T
++   fpic := -fPIC -flto
++   LDFLAGS += -flto
++   CFLAGS += -Ofast \
++	-flto=4 -fwhole-program -fuse-linker-plugin \
++	-fdata-sections -ffunction-sections -Wl,--gc-sections \
++	-fno-stack-protector -fno-ident -fomit-frame-pointer \
++	-falign-functions=1 -falign-jumps=1 -falign-loops=1 \
++	-fno-unwind-tables -fno-asynchronous-unwind-tables -fno-unroll-loops \
++	-fmerge-all-constants -fno-math-errno
++   CFLAGS += -fPIC
++   CFLAGS += -DLSB_FIRST -DFAST_ALIGNED_LSB_WORD_ACCESS -DRIGHTSHIFT_IS_SAR
++   CFLAGS += -std=c99 -fomit-frame-pointer -ffast-math
++   CFLAGS += -marm -mtune=cortex-a9 -mfpu=neon-fp16 -mfloat-abi=hard -march=armv7-a -fomit-frame-pointer
++
+ # PS3
+ else ifneq (,$(filter $(platform), ps3 sncps3 psl1ght))
+    TARGET := $(TARGET_NAME)_libretro_ps3.a
