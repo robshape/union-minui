@@ -36,7 +36,7 @@ enum {
 // default frontend options
 static int screen_scaling = SCALE_ASPECT; // aspect
 static int show_scanlines = 0;
-static int optimize_text = 1;
+static int optimize_text = 0;
 static int prevent_tearing = 1; // lenient
 static int show_debug = 0;
 static int max_ff_speed = 3; // 4x
