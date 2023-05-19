@@ -37,7 +37,9 @@ on top of MinUI.
 
 - Add to Favorites
 - Clear "Recently Played"
-- Adjustment of battery readings
+- Adjusted battery readings
+- Battery efficiency improvements
+- Performance improvements
 - Base and extras are now all included in one full release
 - Includes native installation instructions using macOS
 - Developer experience improvements
