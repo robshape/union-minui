@@ -20,10 +20,16 @@ echo noop > /sys/devices/b0230000.mmc/mmc_host/mmc1/sd_card/block/mmcblk1/queue/
 echo on > /sys/devices/b0238000.mmc/mmc_host/mmc0/power/control
 echo on > /sys/devices/b0230000.mmc/mmc_host/mmc1/power/control
 
-export CPU_SPEED_MENU=504000
-export CPU_SPEED_GAME=1296000
-export CPU_SPEED_PERF=1488000
+export CPU_SPEED_MENU=504000 # 500 MHz
+export CPU_SPEED_GAME=1008000 # 1.0 GHz
+export CPU_SPEED_PERF=1296000 # 1.3 GHz
 echo userspace > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+# Enable all cores (0, 1, 2, 3)
+#echo 0xf > /sys/devices/system/cpu/autoplug/plug_mask
+# Enable core 0 and 1 (but use 0 only)
+echo 0x3 > /sys/devices/system/cpu/autoplug/plug_mask
+echo 0 > /sys/devices/system/cpu/cpu1/online
 
 #######################################
 
