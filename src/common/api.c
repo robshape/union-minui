@@ -1552,11 +1552,15 @@ void POW_powerOff(void) {
 		GFX_clear(gfx.screen);
 		GFX_blitMessage(font.large, msg, gfx.screen, NULL);
 		GFX_flip(gfx.screen);
+
+		system("sync");
+		system("echo s > /proc/sysrq-trigger");
+		system("echo u > /proc/sysrq-trigger");
+		system("sync");
+
 		sleep(2);
 		
 		// actual shutdown
-		system("echo u > /proc/sysrq-trigger");
-		system("echo s > /proc/sysrq-trigger");
 		system("echo o > /proc/sysrq-trigger");
 	}
 }
