@@ -46,6 +46,7 @@ cd $(dirname "$0")
 
 keymon.elf & # &> $LOGS_PATH/keymon.txt &
 # ./batmon.sh &> /mnt/sdcard/batmon.txt &
+# ./timemon.sh &
 
 #######################################
 
