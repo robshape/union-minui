@@ -232,8 +232,8 @@ int POW_isCharging(void);
 int POW_getBattery(void);
 
 #define CPU_SPEED_MENU			 504000 // 500 MHz
-#define CPU_SPEED_POWERSAVE 	840000 // 840 MHz
-#define CPU_SPEED_NORMAL 		1008000 // 1 GHz (Anbernic default max)
+#define CPU_SPEED_POWERSAVE 	720000 // 720 MHz
+#define CPU_SPEED_NORMAL 		1008000 // 1.0 GHz
 #define CPU_SPEED_PERFORMANCE	1296000 // 1.3 GHz
 // Reference overclock.c
 void POW_setCPUSpeed(int speed);
