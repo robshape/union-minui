@@ -52,9 +52,12 @@ reconnect your microSD.
 12. Finally, to clean up you microSD, run the following commands:
 
 dot_clean -m /Volumes/misc
-dot_clean -m /Volumes/ROMS
 rm -fr /Volumes/misc/.fseventsd /Volumes/misc/.Spotlight-V100 /Volumes/misc/.Trashes
+mkdir /Volumes/misc/.fseventsd && touch /Volumes/misc/.fseventsd/no_log /Volumes/misc/.metadata_never_index /Volumes/misc.Trashes
+
+dot_clean -m /Volumes/ROMS
 rm -fr /Volumes/ROMS/.fseventsd /Volumes/ROMS/.Spotlight-V100 /Volumes/ROMS/.Trashes
+mkdir /Volumes/ROMS/.fseventsd && touch /Volumes/ROMS/.fseventsd/no_log /Volumes/ROMS/.metadata_never_index /Volumes/ROMS.Trashes
 
 Done. Insert your microSD to your RG35XX and boot it up!
 
