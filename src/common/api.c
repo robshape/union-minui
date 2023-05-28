@@ -1392,6 +1392,7 @@ static int POW_readBatteryStatus(void) {
 	#define BATTERY_2100MAH 1
 	#define BATTERY_2600MAH 2
 	#define BATTERY_3500MAH 3
+	#define UNKNOWN 9
 
 	int battery = BATTERY_2600MAH; // Default
 	int battery_txt = getInt(BATTERY_PATH);
@@ -1436,7 +1437,7 @@ static void* POW_monitorBattery(void *arg) {
 	while(1) {
 		// TODO: the frequency of checking should depend on whether 
 		// we're in game (less frequent) or menu (more frequent)
-		sleep(1);
+		sleep(30);
 		POW_updateBatteryStatus();
 	}
 	return NULL;
