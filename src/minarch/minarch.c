@@ -4351,7 +4351,7 @@ int main(int argc , char* argv[]) {
 		
 		if (show_menu) Menu_loop();
 		
-		trackFPS();
+		if (show_debug) trackFPS();
 	}
 	
 	Menu_quit();
