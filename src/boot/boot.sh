@@ -1,6 +1,9 @@
 #!/system/bin/sh
 
-/usbdbg.sh device
+# Enable Android Debug Bridge
+if [ -f /misc/enableADB ]; then
+	/usbdbg.sh device
+fi
 
 TF1_PATH=/mnt/mmc # ROMS partition
 TF2_PATH=/mnt/sdcard
@@ -50,17 +53,17 @@ if [ -f $UPDATE_PATH ]; then
 	fi
 
 	# extract the zip file appended to the end of this script to tmp
-	# and display one of the two images it contains 
+	# and display one of the two images it contains
 	CUT=$((`busybox grep -n '^BINARY' $0 | busybox cut -d ':' -f 1 | busybox tail -1` + 1))
 	busybox tail -n +$CUT "$0" | busybox uudecode -o /tmp/data
 	busybox unzip -o /tmp/data -d /tmp
 	busybox fbset -g 640 480 640 480 16
 	dd if=/tmp/$ACTION of=/dev/fb0
 	sync
-	
+
 	busybox unzip -o $UPDATE_PATH -d $SDCARD_PATH
 	rm -f $UPDATE_PATH
-	
+
 	# the updated system finishes the install/update
 	$SYSTEM_PATH/bin/install.sh # &> $SDCARD_PATH/install.txt
 fi
@@ -107,4 +110,3 @@ busybox losetup --detach $LOOPDEVICE
 sync && reboot -p
 
 exit 0
-
