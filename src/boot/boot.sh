@@ -1,6 +1,5 @@
 #!/system/bin/sh
 
-# Enable Android Debug Bridge
 if [ -f /misc/enableADB ]; then
 	/usbdbg.sh device
 fi

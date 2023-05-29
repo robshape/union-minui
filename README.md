@@ -54,6 +54,10 @@ on top of MinUI.
 
 Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
 
+### Debug project
+
+Create a file with the name `enableADB` on the `misc` disk to enable ADB.
+
 ### TODO
 
 - Improve battery capacity reading accuracy
