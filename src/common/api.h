@@ -230,6 +230,7 @@ int POW_preventAutosleep(void);
 
 int POW_isCharging(void);
 int POW_getBattery(void);
+int POW_readBatteryStatus(void);
 
 #define CPU_SPEED_MENU			 504000 // 500 MHz
 #define CPU_SPEED_POWERSAVE 	720000 // 720 MHz

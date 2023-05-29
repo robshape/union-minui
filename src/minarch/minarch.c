@@ -2776,6 +2776,9 @@ static void video_refresh_callback(const void *data, unsigned width, unsigned he
 			x = MSG_blitDouble(use_double, x,y);
 			x = MSG_blitChar(DIGIT_PERCENT,x,y);
 		}
+		x = MSG_blitChar(DIGIT_SPACE,x,y);
+		x = MSG_blitInt(POW_readBatteryStatus(), x,y);
+		x = MSG_blitChar(DIGIT_PERCENT,x,y);
 		
 		if (x>bottom_width) bottom_width = x; // keep the largest width because triple buffer
 		

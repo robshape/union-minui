@@ -1388,7 +1388,7 @@ static void POW_quitOverlay(void) {
 	ioctl(gfx.fd_fb, OWLFB_OVERLAY_DISABLE, &pow.oargs);
 }
 
-static int POW_readBatteryStatus(void) {
+int POW_readBatteryStatus(void) {
 	#define BATTERY_2100MAH 1
 	#define BATTERY_2600MAH 2
 	#define BATTERY_3500MAH 3
