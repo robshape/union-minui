@@ -12,7 +12,8 @@ endif
 
 ###########################################################
 
-BUILD_HASH!=git rev-parse --short HEAD
+#BUILD_HASH!=git rev-parse --short HEAD
+BUILD_HASH=HEAD
 
 RELEASE_TIME!=date +%Y%m%d
 RELEASE_BASE=FinUI-$(RELEASE_TIME)b
