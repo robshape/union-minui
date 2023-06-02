@@ -37,8 +37,9 @@ on top of MinUI.
 
 - Add to Favorites
 - Clear "Recently Played"
-- Battery efficiency improvements
+- Power saving improvements
 - Performance improvements
+- Multi-core support
 - Battery reading adjustments
 - Base and Extras are merged into one Full release
 - Native macOS installation instructions
@@ -63,6 +64,7 @@ Create a file with the name `enableADB` on the `misc` disk to enable ADB.
 - Improve battery capacity reading accuracy
 - Show battery percentage number overlay
 - Change boot logo
+- Change battery charging images
 - Search
 - [...things in the old todo?...](./todo.txt)
 
