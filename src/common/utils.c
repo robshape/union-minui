@@ -117,7 +117,7 @@ void trimSortingMeta(char** str) { // eg. `001) `
 	char* safe = *str;
 	while(isdigit(**str)) *str += 1; // ignore leading numbers
 
-	if (*str[0]==')') { // then match a closing parenthesis
+	if (*str[0]==')' || *str[0]=='.') { // then match a closing parenthesis or dot
 		*str += 1;
 	}
 	else { //  or bail, restoring the string to its original value
