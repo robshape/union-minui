@@ -62,9 +62,10 @@ Create a file with the name `enableADB` on the `misc` disk to enable ADB.
 ### TODO
 
 - Improve battery capacity reading accuracy
-- Show battery percentage number overlay
-- Change boot logo
+- Show battery percentage number in header
+- Change boot logo (animated?)
 - Change battery charging images
+- Add video_threaded for demanding cores
 - Search
 - [...things in the old todo?...](./todo.txt)
 
