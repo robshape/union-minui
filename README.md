@@ -39,8 +39,9 @@ on top of MinUI.
 - Clear "Recently Played"
 - Power saving improvements
 - Performance improvements
-- Multi-core support
+- Multi-core CPU support
 - Battery reading adjustments
+- Additional emulators (MAME)
 - Base and Extras are merged into one Full release
 - Native macOS installation instructions
 - Developer experience improvements
@@ -62,6 +63,8 @@ Create a file with the name `enableADB` on the `misc` disk to enable ADB.
 ### TODO
 
 - Improve battery capacity reading accuracy
+- Clear save state slots
+- Show low battery warning
 - Show battery percentage number in header
 - Change boot logo (animated?)
 - Change battery charging images
