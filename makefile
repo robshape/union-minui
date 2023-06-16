@@ -22,7 +22,7 @@ RELEASE_NAME=$(RELEASE_BASE)-$(RELEASE_DOT)
 
 # TODO: this needs to consider the different platforms, eg. rootfs.ext2 should only be copied in rg35xx-toolchain
 
-all: lib sys all-cores tools bundle readmes zip report
+all: lib sys all-cores tools dtb bundle readmes zip report
 
 repack: bundle readmes zip report
 
@@ -44,6 +44,9 @@ tools:
 	cd ./src/clear_recent && make
 	cd ./other/DinguxCommander && make -j
 
+dtb:
+	cd ./src/dts/ && make
+
 bundle:
 	# ready build
 	rm -rf ./build
@@ -63,6 +66,7 @@ bundle:
 
 	# populate system
 	cp ~/buildroot/output/images/rootfs.ext2 ./build/SYSTEM/rg35xx
+	cp ./src/dts/kernel.dtb ./build/SYSTEM/rg35xx/dat
 	cp ./src/libmsettings/libmsettings.so ./build/SYSTEM/rg35xx/lib
 	cp ./src/keymon/keymon.elf ./build/SYSTEM/rg35xx/bin
 	cp ./src/minarch/minarch.elf ./build/SYSTEM/rg35xx/bin
