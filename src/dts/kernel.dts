@@ -285,7 +285,7 @@
 				bl_off_voltage_diff = <0x190>;
 				support_adaptor_type = <0x01>;
 				usb_adapter_as_ac = <0x00>;
-				boot_cap_threshold = <0x03>;
+				boot_cap_threshold = <0x00>;
 				ext_dcdc_exist = <0x00>;
 				pwms = <0x0d 0x02 0x7a120 0x01>;
 				pwm-names = "ext_moto";
