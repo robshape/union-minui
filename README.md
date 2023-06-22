@@ -54,17 +54,20 @@ on top of MinUI.
 
 ### Build project
 
-Run `./start-toolchain.sh` and then `make all` in the Docker container shell.
+Run `./start-toolchain.sh` and then run `make all` in the Docker container shell.
 
 ### Debug project
 
 Create a file with the name `enableADB` on the `misc` disk to enable ADB.
 
+### Install release
+
+Update `DISK_PATH` and then run `./install-release.sh`.
+
 ### TODO
 
-- Improve battery capacity reading accuracy
 - Clear save state slots
-- Show low battery warning
+- Improve low battery warning
 - Show battery percentage number in header
 - Change boot logo (animated?)
 - Change battery charging images
