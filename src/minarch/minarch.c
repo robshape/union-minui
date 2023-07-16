@@ -816,7 +816,7 @@ static struct Config {
 			[FE_OPT_CONNECTPORT] = {
 				.key	= "minarch_connect_port", 
 				.name	= "Connect RetroPad Device",
-				.desc	= "Connect RetroPad device to input port.\nEnable this, if a core cannot automatically detect the appropriate input device type on its own.",
+				.desc	= "Connect RetroPad device to input port.\nEnable this, if a core cannot automatically detect\nthe appropriate input device type on its own.",
 				.default_value = 0,
 				.value = 0,
 				.count = 2,
