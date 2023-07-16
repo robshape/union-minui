@@ -91,6 +91,7 @@ bundle:
 	cp ./cores/output/mednafen_supafaust_libretro.so ./build/EXTRAS/Emus/rg35xx/SUPA.pak
 	cp ./cores/output/mednafen_vb_libretro.so ./build/EXTRAS/Emus/rg35xx/VB.pak
 	cp ./cores/output/pokemini_libretro.so ./build/EXTRAS/Emus/rg35xx/PKM.pak
+	cp ./cores/output/vice_x64_libretro.so ./build/EXTRAS/Emus/rg35xx/C64.pak
 	cp ./other/DinguxCommander/output/DinguxCommander ./build/EXTRAS/Tools/rg35xx/Files.pak
 	cp -R ./other/DinguxCommander/res ./build/EXTRAS/Tools/rg35xx/Files.pak/
 

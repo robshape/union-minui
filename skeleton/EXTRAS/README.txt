@@ -28,7 +28,9 @@ Bios files
 
 You'll need to BYOB for the emulator paks included in this zip file.
 
+ C64: vice/JiffyDOS_C64.bin and vice/JiffyDOS_1541-II.bin (reccomanded but not needed)
 MGBA: gba_bios.bin
  PCE: syscard3.pce
  PKM: bios.min
  SGB: sgb.bios
+ 
