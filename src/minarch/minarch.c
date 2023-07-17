@@ -42,6 +42,7 @@ static int show_debug = 0;
 static int max_ff_speed = 3; // 4x
 static int fast_forward = 0;
 static int overclock = 1; // normal
+static int connect_port = 0; //// See retro_set_controller_port_device in libretro.h, most cores will do this automatically.
 
 static struct Renderer {
 	int src_w;
@@ -579,6 +580,7 @@ enum {
 	FE_OPT_OVERCLOCK,
 	FE_OPT_DEBUG,
 	FE_OPT_MAXFF,
+	FE_OPT_CONNECTPORT,
 	FE_OPT_COUNT,
 };
 
@@ -811,6 +813,16 @@ static struct Config {
 				.values = max_ff_labels,
 				.labels = max_ff_labels,
 			},
+			[FE_OPT_CONNECTPORT] = {
+				.key	= "minarch_connect_port", 
+				.name	= "Connect RetroPad Device",
+				.desc	= "Connect RetroPad device to input port.\nEnable this, if a core cannot automatically detect the appropriate input device type on its own.",
+				.default_value = 0,
+				.value = 0,
+				.count = 2,
+				.values = onoff_labels,
+				.labels = onoff_labels,
+			},
 			[FE_OPT_COUNT] = {NULL}
 		}
 	},
@@ -862,13 +874,14 @@ static void setOverclock(int i) {
 }
 static void Config_syncFrontend(int i, int value) {
 	switch (i) {
-		case FE_OPT_SCALING:	screen_scaling 	= value; renderer.src_w = 0; break;
-		case FE_OPT_SCANLINES:	show_scanlines 	= value; renderer.src_w = 0; break;
-		case FE_OPT_TEXT:		optimize_text 	= value; renderer.src_w = 0; break;
-		case FE_OPT_TEARING:	prevent_tearing = value; break;
-		case FE_OPT_OVERCLOCK:	overclock		= value; break;
-		case FE_OPT_DEBUG:		show_debug 		= value; break;
-		case FE_OPT_MAXFF:		max_ff_speed 	= value; break;
+		case FE_OPT_SCALING:		screen_scaling 	= value; renderer.src_w = 0; break;
+		case FE_OPT_SCANLINES:		show_scanlines 	= value; renderer.src_w = 0; break;
+		case FE_OPT_TEXT:			optimize_text 	= value; renderer.src_w = 0; break;
+		case FE_OPT_TEARING:		prevent_tearing = value; break;
+		case FE_OPT_OVERCLOCK:		overclock		= value; break;
+		case FE_OPT_DEBUG:			show_debug 		= value; break;
+		case FE_OPT_MAXFF:			max_ff_speed 	= value; break;
+		case FE_OPT_CONNECTPORT:	connect_port 	= value; break;
 	}
 	Option* option = &config.frontend.options[i];
 	option->value = value;
@@ -2901,6 +2914,14 @@ void Core_init(void) {
 }
 void Core_load(void) {
 	LOG_info("Core_load\n");
+
+	// See retro_set_controller_port_device in libretro.h
+	// "It is only a hint to the libretro core when a core cannot automatically detect 
+	// the appropriate input device type on its own."
+	// This seems to be the case for vice-libretro, but could be true of other cores.
+	// The new option in the Frontend menu, makes it possible to enabled this if necessary 
+	if (connect_port) core.set_controller_port_device(0,RETRO_DEVICE_JOYPAD);
+
 	struct retro_game_info game_info;
 	game_info.path = game.tmp_path[0]?game.tmp_path:game.path;
 	game_info.data = game.data;
