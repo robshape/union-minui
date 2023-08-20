@@ -463,7 +463,47 @@ error:
 	if (state) free(state);
 	if (state_file) fclose(state_file);
 }
+typedef struct __attribute__((__packed__)) uint24_t {
+	uint8_t a,b,c;
+} uint24_t;
+static SDL_Surface* Menu_thumbnail(SDL_Surface* src_img) {
+	SDL_Surface* dst_img = SDL_CreateRGBSurface(0,FIXED_WIDTH/2, FIXED_HEIGHT/2,src_img->format->BitsPerPixel,src_img->format->Rmask,src_img->format->Gmask,src_img->format->Bmask,src_img->format->Amask);
+
+	uint8_t* src_px = src_img->pixels;
+	uint8_t* dst_px = dst_img->pixels;
+	int step = dst_img->format->BytesPerPixel;
+	int step2 = step * 2;
+	int stride = src_img->pitch;
+	for (int y=0; y<dst_img->h; y++) {
+		for (int x=0; x<dst_img->w; x++) {
+			switch(step) {
+				case 1:
+					*dst_px = *src_px;
+					break;
+				case 2:
+					*(uint16_t*)dst_px = *(uint16_t*)src_px;
+					break;
+				case 3:
+					*(uint24_t*)dst_px = *(uint24_t*)src_px;
+					break;
+				case 4:
+					*(uint32_t*)dst_px = *(uint32_t*)src_px;
+					break;
+			}
+			dst_px += step;
+			src_px += step2;
+		}
+		src_px += stride;
+	}
+
+	return dst_img;
+}
 static void State_write(void) { // from picoarch
+	char bmp_path[256];
+	char minui_dir[256];
+	char emu_name[256];
+	SDL_Surface* snapshot = SDL_CreateRGBSurface(SDL_SWSURFACE, FIXED_WIDTH,FIXED_HEIGHT,FIXED_DEPTH,0,0,0,0);
+
 	size_t state_size = core.serialize_size();
 	if (!state_size) return;
 
@@ -491,6 +531,14 @@ static void State_write(void) { // from picoarch
 		LOG_error("Error writing state data to file: %s (%s)\n", filename, strerror(errno));
 		goto error;
 	}
+
+	getEmuName(game.path, emu_name);
+	sprintf(minui_dir, USERDATA_PATH "/.minui/%s", emu_name);
+  sprintf(bmp_path, "%s/%s.%d.bmp", minui_dir, game.name, state_slot);
+  SDL_Surface* preview = Menu_thumbnail(snapshot);
+  SDL_RWops* out = SDL_RWFromFile(bmp_path, "wb");
+  SDL_SaveBMP_RW(preview, out, 1);
+  SDL_FreeSurface(preview);
 
 error:
 	if (state) free(state);
@@ -2977,41 +3025,6 @@ static struct {
 	}
 };
 
-typedef struct __attribute__((__packed__)) uint24_t {
-	uint8_t a,b,c;
-} uint24_t;
-static SDL_Surface* Menu_thumbnail(SDL_Surface* src_img) {
-	SDL_Surface* dst_img = SDL_CreateRGBSurface(0,FIXED_WIDTH/2, FIXED_HEIGHT/2,src_img->format->BitsPerPixel,src_img->format->Rmask,src_img->format->Gmask,src_img->format->Bmask,src_img->format->Amask);
-
-	uint8_t* src_px = src_img->pixels;
-	uint8_t* dst_px = dst_img->pixels;
-	int step = dst_img->format->BytesPerPixel;
-	int step2 = step * 2;
-	int stride = src_img->pitch;
-	for (int y=0; y<dst_img->h; y++) {
-		for (int x=0; x<dst_img->w; x++) {
-			switch(step) {
-				case 1:
-					*dst_px = *src_px;
-					break;
-				case 2:
-					*(uint16_t*)dst_px = *(uint16_t*)src_px;
-					break;
-				case 3:
-					*(uint24_t*)dst_px = *(uint24_t*)src_px;
-					break;
-				case 4:
-					*(uint32_t*)dst_px = *(uint32_t*)src_px;
-					break;
-			}
-			dst_px += step;
-			src_px += step2;
-		}
-		src_px += stride;
-	}
-
-	return dst_img;
-}
 
 void Menu_init(void) {
 	menu.overlay = SDL_CreateRGBSurface(SDL_SWSURFACE, FIXED_WIDTH, FIXED_HEIGHT, FIXED_DEPTH, 0, 0, 0, 0);
