@@ -70,6 +70,42 @@ void getDisplayName(const char* in_name, char* out_name) {
   if (!strcmp("Tools", out_name)) {
     strcpy(out_name, "Settings");
   }
+  else if (!strcmp(out_name, "PS")) {
+    strcpy(out_name, "Sony Playstation");
+  }
+  else if (!strcmp(out_name, "SFC")) {
+    strcpy(out_name, "Super Nintendo Entertainment System");
+  }
+  else if (!strcmp(out_name, "FC")) {
+    strcpy(out_name, "Nintendo Entertainment System");
+  }
+  else if (!strcmp(out_name, "GB")) {
+    strcpy(out_name, "Game Boy");
+  }
+  else if (!strcmp(out_name, "GBA")) {
+    strcpy(out_name, "Game Boy Advance");
+  }
+  else if (!strcmp(out_name, "GBC")) {
+    strcpy(out_name, "Game Boy Color");
+  }
+  else if (!strcmp(out_name, "GG")) {
+    strcpy(out_name, "Game Gear");
+  }
+  else if (!strcmp(out_name, "MS")) {
+    strcpy(out_name, "Sega Master System");
+  }
+  else if (!strcmp(out_name, "MD")) {
+    strcpy(out_name, "Sega Genesis");
+  }
+  else if (!strcmp(out_name, "SGB")) {
+    strcpy(out_name, "Super Game Boy");
+  }
+  else if (!strcmp(out_name, "PCE")) {
+    strcpy(out_name, "TurboGrafx-16");
+  }
+  else if (!strcmp(out_name, "VB")) {
+    strcpy(out_name, "Virtual Boy");
+  }
 }
 void getEmuName(const char* in_name, char* out_name) { // NOTE: both char arrays need to be MAX_PATH length!
 	char* tmp;
@@ -81,6 +117,7 @@ void getEmuName(const char* in_name, char* out_name) { // NOTE: both char arrays
 		tmp += strlen(ROMS_PATH) + 1;
 		char* tmp2 = strchr(tmp, '/');
 		if (tmp2) tmp2[0] = '\0';
+    strcpy(out_name, tmp);
 	}
 
 	// finally extract pak name from parenths if present
