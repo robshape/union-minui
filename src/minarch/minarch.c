@@ -498,11 +498,38 @@ static SDL_Surface* Menu_thumbnail(SDL_Surface* src_img) {
 
 	return dst_img;
 }
+
+static void downsample(void* __restrict src, void* __restrict dst, uint32_t w, uint32_t h, uint32_t pitch, uint32_t dst_pitch) {
+	uint32_t ox = 0;
+	uint32_t oy = 0;
+	uint32_t ix = (w<<16) / FIXED_WIDTH;
+	uint32_t iy = (h<<16) / FIXED_HEIGHT;
+	
+	for (int y=0; y<FIXED_HEIGHT; y++) {
+		uint16_t* restrict src_row = (void*)src + (oy>>16) * pitch;
+		uint16_t* restrict dst_row = (void*)dst + y * dst_pitch;
+		for (int x=0; x<FIXED_WIDTH; x++) {
+			*dst_row = *(src_row + (ox>>16));
+			dst_row += 1;
+			ox += ix;
+		}
+		ox = 0;
+		oy += iy;
+	}
+}
+
 static void State_write(void) { // from picoarch
 	char bmp_path[256];
 	char minui_dir[256];
 	char emu_name[256];
+	SDL_Surface* backing = GFX_getBufferCopy();
 	SDL_Surface* snapshot = SDL_CreateRGBSurface(SDL_SWSURFACE, FIXED_WIDTH,FIXED_HEIGHT,FIXED_DEPTH,0,0,0,0);
+	if (backing->w==FIXED_WIDTH && backing->h==FIXED_HEIGHT) {
+		SDL_BlitSurface(backing, NULL, snapshot, NULL);
+	}
+	else {
+		downsample(backing->pixels,snapshot->pixels,backing->w,backing->h,backing->pitch,snapshot->pitch);
+	}
 
 	size_t state_size = core.serialize_size();
 	if (!state_size) return;
@@ -3810,25 +3837,6 @@ static int Menu_options(MenuList* list) {
 	// GFX_flip(screen);
 	
 	return 0;
-}
-
-static void downsample(void* __restrict src, void* __restrict dst, uint32_t w, uint32_t h, uint32_t pitch, uint32_t dst_pitch) {
-	uint32_t ox = 0;
-	uint32_t oy = 0;
-	uint32_t ix = (w<<16) / FIXED_WIDTH;
-	uint32_t iy = (h<<16) / FIXED_HEIGHT;
-	
-	for (int y=0; y<FIXED_HEIGHT; y++) {
-		uint16_t* restrict src_row = (void*)src + (oy>>16) * pitch;
-		uint16_t* restrict dst_row = (void*)dst + y * dst_pitch;
-		for (int x=0; x<FIXED_WIDTH; x++) {
-			*dst_row = *(src_row + (ox>>16));
-			dst_row += 1;
-			ox += ix;
-		}
-		ox = 0;
-		oy += iy;
-	}
 }
 
 static void Menu_loop(void) {
