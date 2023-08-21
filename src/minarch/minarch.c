@@ -333,13 +333,6 @@ static void Game_open(char* path) {
 	tmp = strrchr(m3u_path, '/');
 	tmp[0] = '\0';
 
-	tmp = strrchr(m3u_path, '/');
-	strcpy(dir_name, tmp);
-	
-	tmp = m3u_path + strlen(m3u_path); 
-	strcpy(tmp, dir_name);
-	
-	tmp = m3u_path + strlen(m3u_path);
 	strcpy(tmp, ".m3u");
 	
 	if (exists(m3u_path)) {
