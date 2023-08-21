@@ -859,6 +859,7 @@ static void addEntries(Array* entries, char* path) {
 		tmp = full_path + strlen(full_path);
 		while((dp = readdir(dh)) != NULL) {
 			if (hide(dp->d_name)) continue;
+      if (suffixMatch(".m3u", dp->d_name)) continue;
 			strcpy(tmp, dp->d_name);
 			int is_dir = dp->d_type==DT_DIR;
 			int type;
@@ -1126,6 +1127,16 @@ static void openDirectory(char* path, int auto_launch) {
 	strcpy(m3u_path, auto_path);
 	char* tmp = strrchr(m3u_path, '.') + 1; // extension
 	strcpy(tmp, "m3u"); // replace with m3u
+	if (exists(m3u_path) && auto_launch) {
+		auto_path[0] = '\0';
+		if (getFirstDisc(m3u_path, auto_path)) {
+			openRom(auto_path, path);
+			return;
+		}
+		// TODO: doesn't handle empty m3u files
+	}
+	tmp = strrchr(m3u_path, '/'); // extension
+	strcpy(tmp, ".m3u"); // replace with m3u
 	if (exists(m3u_path) && auto_launch) {
 		auto_path[0] = '\0';
 		if (getFirstDisc(m3u_path, auto_path)) {

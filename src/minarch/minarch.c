@@ -346,6 +346,23 @@ static void Game_open(char* path) {
 		strcpy(game.m3u_path, m3u_path);
 		strcpy((char*)game.name, strrchr(m3u_path, '/')+1);
 	}
+  else {
+    tmp[0] = '\0';
+
+    tmp = strrchr(m3u_path, '/');
+    strcpy(dir_name, tmp);
+    
+    tmp = m3u_path + strlen(m3u_path); 
+    strcpy(tmp, dir_name);
+    
+    tmp = m3u_path + strlen(m3u_path);
+    strcpy(tmp, ".m3u");
+    
+    if (exists(m3u_path)) {
+      strcpy(game.m3u_path, m3u_path);
+      strcpy((char*)game.name, strrchr(m3u_path, '/')+1);
+    }
+  }
 	
 	game.is_open = 1;
 }
