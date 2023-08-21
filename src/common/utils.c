@@ -76,6 +76,9 @@ void getDisplayName(const char* in_name, char* out_name) {
   else if (!strcmp(out_name, "SFC")) {
     strcpy(out_name, "Super Nintendo Entertainment System");
   }
+  else if (!strcmp(out_name, "SUPA")) {
+    strcpy(out_name, "Super Nintendo Entertainment System");
+  }
   else if (!strcmp(out_name, "FC")) {
     strcpy(out_name, "Nintendo Entertainment System");
   }
