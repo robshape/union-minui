@@ -520,6 +520,8 @@ static void downsample(void* __restrict src, void* __restrict dst, uint32_t w, u
 
 static void State_write(void) { // from picoarch
 	char bmp_path[256];
+	char slot_path[256];
+	char txt_path[256];
 	char minui_dir[256];
 	char emu_name[256];
 	SDL_Surface* backing = GFX_getBufferCopy();
@@ -561,11 +563,21 @@ static void State_write(void) { // from picoarch
 
 	getEmuName(game.path, emu_name);
 	sprintf(minui_dir, USERDATA_PATH "/.minui/%s", emu_name);
+	sprintf(slot_path, "%s/%s.txt", minui_dir, game.name);
   sprintf(bmp_path, "%s/%s.%d.bmp", minui_dir, game.name, state_slot);
   SDL_Surface* preview = Menu_thumbnail(snapshot);
   SDL_RWops* out = SDL_RWFromFile(bmp_path, "wb");
+
+  if (exists(game.m3u_path)) {
+    char* tmp = strrchr(game.m3u_path, '/') + 1;
+    sprintf(txt_path, "%s/%s.%d.txt", minui_dir, tmp, state_slot);
+    tmp = strrchr(game.path, '/') + 1;
+    putFile(txt_path, tmp);
+  }
+
   SDL_SaveBMP_RW(preview, out, 1);
   SDL_FreeSurface(preview);
+  putInt(slot_path, state_slot);
 
 error:
 	if (state) free(state);
