@@ -23,6 +23,43 @@
 
 ///////////////////////////////////////
 
+#define MENU_ITEM_COUNT 5
+#define MENU_SLOT_COUNT 8
+
+enum {
+	ITEM_CONT,
+	ITEM_SAVE,
+	ITEM_LOAD,
+	ITEM_OPTS,
+	ITEM_QUIT,
+};
+
+enum {
+	STATUS_CONT =  0,
+	STATUS_SAVE =  1,
+	STATUS_LOAD = 11,
+	STATUS_OPTS = 23,
+	STATUS_DISC = 24,
+	STATUS_QUIT = 30
+};
+
+static struct {
+	int initialized;
+	SDL_Surface* overlay;
+	char* items[MENU_ITEM_COUNT];
+	int slot;
+} menu = {
+	.items = {
+		[ITEM_CONT] = "Continue",
+		[ITEM_SAVE] = "Save",
+		[ITEM_LOAD] = "Load",
+		[ITEM_OPTS] = "Options",
+		[ITEM_QUIT] = "Quit",
+	}
+};
+
+///////////////////////////////////////
+
 static SDL_Surface* screen;
 static int quit;
 static int show_menu;
@@ -577,6 +614,8 @@ static void State_write(void) { // from picoarch
 
   SDL_SaveBMP_RW(preview, out, 1);
   SDL_FreeSurface(preview);
+  SDL_FreeSurface(backing);
+  SDL_FreeSurface(snapshot);
   putInt(slot_path, state_slot);
 
 error:
@@ -3027,42 +3066,6 @@ void Core_close(void) {
 	if (core.handle) dlclose(core.handle);
 }
 
-///////////////////////////////////////
-
-#define MENU_ITEM_COUNT 5
-#define MENU_SLOT_COUNT 8
-
-enum {
-	ITEM_CONT,
-	ITEM_SAVE,
-	ITEM_LOAD,
-	ITEM_OPTS,
-	ITEM_QUIT,
-};
-
-enum {
-	STATUS_CONT =  0,
-	STATUS_SAVE =  1,
-	STATUS_LOAD = 11,
-	STATUS_OPTS = 23,
-	STATUS_DISC = 24,
-	STATUS_QUIT = 30
-};
-
-static struct {
-	int initialized;
-	SDL_Surface* overlay;
-	char* items[MENU_ITEM_COUNT];
-	int slot;
-} menu = {
-	.items = {
-		[ITEM_CONT] = "Continue",
-		[ITEM_SAVE] = "Save",
-		[ITEM_LOAD] = "Load",
-		[ITEM_OPTS] = "Options",
-		[ITEM_QUIT] = "Quit",
-	}
-};
 
 
 void Menu_init(void) {
@@ -4040,14 +4043,8 @@ static void Menu_loop(void) {
 					status = STATUS_SAVE;
 					SDL_Surface* preview = Menu_thumbnail(snapshot);
 					SDL_RWops* out = SDL_RWFromFile(bmp_path, "wb");
-					if (total_discs) {
-						char* disc_path = disc_paths[disc];
-						putFile(txt_path, disc_path + strlen(base_path));
-						sprintf(bmp_path, "%s/%s.%d.bmp", minui_dir, game.name, menu.slot);
-					}
 					SDL_SaveBMP_RW(preview, out, 1);
 					SDL_FreeSurface(preview);
-					putInt(slot_path, menu.slot);
 					show_menu = 0;
 				}
 				break;
