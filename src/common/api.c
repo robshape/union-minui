@@ -1394,7 +1394,7 @@ int POW_readBatteryStatus(void) {
 	#define BATTERY_3500MAH 3
 	#define UNKNOWN 9
 
-	int battery = BATTERY_2600MAH; // Default
+	int battery = UNKNOWN; // Default
 	int battery_txt = getInt(BATTERY_PATH);
 	if (battery_txt > 0) {
 		battery = battery_txt;
