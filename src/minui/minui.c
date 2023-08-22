@@ -493,6 +493,13 @@ static int hasM3u(char* rom_path, char* m3u_path) { // NOTE: rom_path not dir_pa
 	char* tmp;
 	
 	strcpy(m3u_path, rom_path);
+  if (suffixMatch(".m3u", m3u_path)) {
+    char dir_path[256];
+    strcpy(dir_path, m3u_path);
+    tmp = strchr(dir_path, '.');
+    tmp[0] = '\0';
+    return exists(dir_path);
+  }
 	tmp = strrchr(m3u_path, '/') + 1;
 	tmp[0] = '\0';
 	
@@ -503,6 +510,11 @@ static int hasM3u(char* rom_path, char* m3u_path) { // NOTE: rom_path not dir_pa
 	tmp = strrchr(m3u_path, '/');
 	tmp[0] = '\0';
 	
+  strcpy(tmp, ".m3u");
+  if (exists(m3u_path)) {
+    return exists(m3u_path);
+  }
+
 	// get parent directory name
 	char dir_name[256];
 	tmp = strrchr(m3u_path, '/');
@@ -1096,7 +1108,14 @@ static void openRom(char* path, char* last) {
 				if (disc_path[0]=='/') strcpy(sd_path, disc_path); // absolute
 				else { // relative
 					strcpy(sd_path, m3u_path);
-					char* tmp = strrchr(sd_path, '/') + 1;
+          char* tmp = strrchr(sd_path, '.');
+          tmp[0]='/';
+          tmp+=1;
+          if (exists(sd_path)) {
+          }
+          else {
+            tmp = strrchr(sd_path, '/') + 1;
+          }
 					strcpy(tmp, disc_path);
 				}
 			}
