@@ -2610,7 +2610,7 @@ static void selectScaler_AR(int width, int height, int pitch) {
 	
 	// if (scale>6) scale = 6;
 	// else
-	if (scale>2) scale = 4; // TODO: pillar/letterboxing at 3x produces vertical banding (some kind of alignment issue?)
+	if (scale>2) scale = 2; // TODO: pillar/letterboxing at 3x produces vertical banding (some kind of alignment issue?)
 
 	// reduce scale if we don't have enough memory to accomodate it
 	// scaled width and height can't be greater than our fixed page width or height
