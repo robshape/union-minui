@@ -64,17 +64,6 @@ Create a file with the name `enableADB` on the `misc` disk to enable ADB.
 
 Update `DISK_PATH` and then run `./install-release.sh`.
 
-### TODO
-
-- Clear save state slots
-- Improve low battery warning
-- Show battery percentage number in header
-- Change boot logo (animated?)
-- Change battery charging images
-- Add video_threaded for demanding cores
-- Search
-- [...things in the old todo?...](./todo.txt)
-
 ## Disclaimer
 
 This software is provided without warranty of any kind. In no event shall the authors
