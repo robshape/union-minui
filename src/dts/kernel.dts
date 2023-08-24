@@ -289,6 +289,7 @@
 				ext_dcdc_exist = <0x00>;
 				pwms = <0x0d 0x02 0x7a120 0x01>;
 				pwm-names = "ext_moto";
+				moto_pwm_gpio = <0x0c 0x27 0x01>;
 				ext_charger_exist = <0x00>;
 				charger_led_exist = <0x01>;
 				charger_led_ctl = <0x0c 0x16 0x00>;
