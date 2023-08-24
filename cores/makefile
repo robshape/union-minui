@@ -1,7 +1,7 @@
 # this logic was broken out from picoarch's all-in-one makefile
 
 CORES = fceumm gambatte gpsp pcsx_rearmed picodrive snes9x2005_plus
-CORES+= beetle-pce-fast beetle-vb mednafen_supafaust mgba pokemini mame2003-plus # extras
+CORES+= beetle-pce-fast beetle-vb fake-08 mednafen_supafaust mgba pokemini mame2003-plus # extras
 
 ###############################
 
@@ -18,6 +18,10 @@ beetle-pce-fast_CORE = mednafen_pce_fast_libretro.so
 
 beetle-vb_REPO = https://github.com/libretro/beetle-vb-libretro
 beetle-vb_CORE = mednafen_vb_libretro.so
+
+fake-08_REPO = https://github.com/jtothebell/fake-08
+fake-08_CORE = fake08_libretro.so
+fake-08_BUILD_PATH = fake-08/platform/libretro
 
 fceumm_REPO = https://github.com/libretro/libretro-fceumm
 
