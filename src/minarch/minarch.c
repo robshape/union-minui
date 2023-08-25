@@ -555,20 +555,27 @@ static void downsample(void* __restrict src, void* __restrict dst, uint32_t w, u
 	}
 }
 
-static void State_write(void) { // from picoarch
+static void State_write(SDL_Surface* calling_s) { // from picoarch
 	char bmp_path[256];
 	char slot_path[256];
 	char txt_path[256];
 	char minui_dir[256];
 	char emu_name[256];
-	SDL_Surface* backing = GFX_getBufferCopy();
-	SDL_Surface* snapshot = SDL_CreateRGBSurface(SDL_SWSURFACE, FIXED_WIDTH,FIXED_HEIGHT,FIXED_DEPTH,0,0,0,0);
-	if (backing->w==FIXED_WIDTH && backing->h==FIXED_HEIGHT) {
-		SDL_BlitSurface(backing, NULL, snapshot, NULL);
-	}
-	else {
-		downsample(backing->pixels,snapshot->pixels,backing->w,backing->h,backing->pitch,snapshot->pitch);
-	}
+  SDL_Surface* snapshot;
+  SDL_Surface* backing;
+  if (calling_s == screen) {
+    backing = GFX_getBufferCopy();
+    snapshot = SDL_CreateRGBSurface(SDL_SWSURFACE, FIXED_WIDTH,FIXED_HEIGHT,FIXED_DEPTH,0,0,0,0);
+    if (backing->w==FIXED_WIDTH && backing->h==FIXED_HEIGHT) {
+      SDL_BlitSurface(backing, NULL, snapshot, NULL);
+    }
+    else {
+      downsample(backing->pixels,snapshot->pixels,backing->w,backing->h,backing->pitch,snapshot->pitch);
+    }
+  }
+  else {
+    snapshot = calling_s;
+  }
 
 	size_t state_size = core.serialize_size();
 	if (!state_size) return;
@@ -614,8 +621,10 @@ static void State_write(void) { // from picoarch
 
   SDL_SaveBMP_RW(preview, out, 1);
   SDL_FreeSurface(preview);
-  SDL_FreeSurface(backing);
-  SDL_FreeSurface(snapshot);
+  if (calling_s == screen) {
+    SDL_FreeSurface(backing);
+    SDL_FreeSurface(snapshot);
+  }
   putInt(slot_path, state_slot);
 
 error:
@@ -627,7 +636,7 @@ error:
 static void State_autosave(void) {
 	int last_state_slot = state_slot;
 	state_slot = AUTO_RESUME_SLOT;
-	State_write();
+	State_write(screen);
 	state_slot = last_state_slot;
 }
 static void State_resume(void) {
@@ -1526,7 +1535,7 @@ static void input_poll_callback(void) {
 			}
 			else if (PAD_justPressed(btn)) {
 				switch (i) {
-					case SHORTCUT_SAVE_STATE: State_write(); break;
+					case SHORTCUT_SAVE_STATE: State_write(screen); break;
 					case SHORTCUT_LOAD_STATE: State_read(); break;
 					case SHORTCUT_RESET_GAME: core.reset(); break;
 					case SHORTCUT_CYCLE_SCALE:
@@ -4039,12 +4048,8 @@ static void Menu_loop(void) {
 				
 				case ITEM_SAVE: {
 					state_slot = menu.slot;
-					State_write();
+					State_write(snapshot);
 					status = STATUS_SAVE;
-					SDL_Surface* preview = Menu_thumbnail(snapshot);
-					SDL_RWops* out = SDL_RWFromFile(bmp_path, "wb");
-					SDL_SaveBMP_RW(preview, out, 1);
-					SDL_FreeSurface(preview);
 					show_menu = 0;
 				}
 				break;
