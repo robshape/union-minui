@@ -23,43 +23,6 @@
 
 ///////////////////////////////////////
 
-#define MENU_ITEM_COUNT 5
-#define MENU_SLOT_COUNT 8
-
-enum {
-	ITEM_CONT,
-	ITEM_SAVE,
-	ITEM_LOAD,
-	ITEM_OPTS,
-	ITEM_QUIT,
-};
-
-enum {
-	STATUS_CONT =  0,
-	STATUS_SAVE =  1,
-	STATUS_LOAD = 11,
-	STATUS_OPTS = 23,
-	STATUS_DISC = 24,
-	STATUS_QUIT = 30
-};
-
-static struct {
-	int initialized;
-	SDL_Surface* overlay;
-	char* items[MENU_ITEM_COUNT];
-	int slot;
-} menu = {
-	.items = {
-		[ITEM_CONT] = "Continue",
-		[ITEM_SAVE] = "Save",
-		[ITEM_LOAD] = "Load",
-		[ITEM_OPTS] = "Options",
-		[ITEM_QUIT] = "Quit",
-	}
-};
-
-///////////////////////////////////////
-
 static SDL_Surface* screen;
 static int quit;
 static int show_menu;
@@ -500,60 +463,9 @@ error:
 	if (state) free(state);
 	if (state_file) fclose(state_file);
 }
-typedef struct __attribute__((__packed__)) uint24_t {
-	uint8_t a,b,c;
-} uint24_t;
-static SDL_Surface* Menu_thumbnail(SDL_Surface* src_img) {
-	SDL_Surface* dst_img = SDL_CreateRGBSurface(0,FIXED_WIDTH/2, FIXED_HEIGHT/2,src_img->format->BitsPerPixel,src_img->format->Rmask,src_img->format->Gmask,src_img->format->Bmask,src_img->format->Amask);
+static SDL_Surface* Menu_thumbnail(SDL_Surface* src_img);
 
-	uint8_t* src_px = src_img->pixels;
-	uint8_t* dst_px = dst_img->pixels;
-	int step = dst_img->format->BytesPerPixel;
-	int step2 = step * 2;
-	int stride = src_img->pitch;
-	for (int y=0; y<dst_img->h; y++) {
-		for (int x=0; x<dst_img->w; x++) {
-			switch(step) {
-				case 1:
-					*dst_px = *src_px;
-					break;
-				case 2:
-					*(uint16_t*)dst_px = *(uint16_t*)src_px;
-					break;
-				case 3:
-					*(uint24_t*)dst_px = *(uint24_t*)src_px;
-					break;
-				case 4:
-					*(uint32_t*)dst_px = *(uint32_t*)src_px;
-					break;
-			}
-			dst_px += step;
-			src_px += step2;
-		}
-		src_px += stride;
-	}
-
-	return dst_img;
-}
-
-static void downsample(void* __restrict src, void* __restrict dst, uint32_t w, uint32_t h, uint32_t pitch, uint32_t dst_pitch) {
-	uint32_t ox = 0;
-	uint32_t oy = 0;
-	uint32_t ix = (w<<16) / FIXED_WIDTH;
-	uint32_t iy = (h<<16) / FIXED_HEIGHT;
-	
-	for (int y=0; y<FIXED_HEIGHT; y++) {
-		uint16_t* restrict src_row = (void*)src + (oy>>16) * pitch;
-		uint16_t* restrict dst_row = (void*)dst + y * dst_pitch;
-		for (int x=0; x<FIXED_WIDTH; x++) {
-			*dst_row = *(src_row + (ox>>16));
-			dst_row += 1;
-			ox += ix;
-		}
-		ox = 0;
-		oy += iy;
-	}
-}
+static void downsample(void* __restrict src, void* __restrict dst, uint32_t w, uint32_t h, uint32_t pitch, uint32_t dst_pitch);
 
 static void State_write(SDL_Surface* calling_s) { // from picoarch
 	char bmp_path[256];
@@ -3075,7 +2987,78 @@ void Core_close(void) {
 	if (core.handle) dlclose(core.handle);
 }
 
+///////////////////////////////////////
 
+#define MENU_ITEM_COUNT 5
+#define MENU_SLOT_COUNT 8
+
+enum {
+	ITEM_CONT,
+	ITEM_SAVE,
+	ITEM_LOAD,
+	ITEM_OPTS,
+	ITEM_QUIT,
+};
+
+enum {
+	STATUS_CONT =  0,
+	STATUS_SAVE =  1,
+	STATUS_LOAD = 11,
+	STATUS_OPTS = 23,
+	STATUS_DISC = 24,
+	STATUS_QUIT = 30
+};
+
+static struct {
+	int initialized;
+	SDL_Surface* overlay;
+	char* items[MENU_ITEM_COUNT];
+	int slot;
+} menu = {
+	.items = {
+		[ITEM_CONT] = "Continue",
+		[ITEM_SAVE] = "Save",
+		[ITEM_LOAD] = "Load",
+		[ITEM_OPTS] = "Options",
+		[ITEM_QUIT] = "Quit",
+	}
+};
+
+typedef struct __attribute__((__packed__)) uint24_t {
+	uint8_t a,b,c;
+} uint24_t;
+static SDL_Surface* Menu_thumbnail(SDL_Surface* src_img) {
+	SDL_Surface* dst_img = SDL_CreateRGBSurface(0,FIXED_WIDTH/2, FIXED_HEIGHT/2,src_img->format->BitsPerPixel,src_img->format->Rmask,src_img->format->Gmask,src_img->format->Bmask,src_img->format->Amask);
+
+	uint8_t* src_px = src_img->pixels;
+	uint8_t* dst_px = dst_img->pixels;
+	int step = dst_img->format->BytesPerPixel;
+	int step2 = step * 2;
+	int stride = src_img->pitch;
+	for (int y=0; y<dst_img->h; y++) {
+		for (int x=0; x<dst_img->w; x++) {
+			switch(step) {
+				case 1:
+					*dst_px = *src_px;
+					break;
+				case 2:
+					*(uint16_t*)dst_px = *(uint16_t*)src_px;
+					break;
+				case 3:
+					*(uint24_t*)dst_px = *(uint24_t*)src_px;
+					break;
+				case 4:
+					*(uint32_t*)dst_px = *(uint32_t*)src_px;
+					break;
+			}
+			dst_px += step;
+			src_px += step2;
+		}
+		src_px += stride;
+	}
+
+	return dst_img;
+}
 
 void Menu_init(void) {
 	menu.overlay = SDL_CreateRGBSurface(SDL_SWSURFACE, FIXED_WIDTH, FIXED_HEIGHT, FIXED_DEPTH, 0, 0, 0, 0);
@@ -3861,6 +3844,25 @@ static int Menu_options(MenuList* list) {
 	// GFX_flip(screen);
 	
 	return 0;
+}
+
+static void downsample(void* __restrict src, void* __restrict dst, uint32_t w, uint32_t h, uint32_t pitch, uint32_t dst_pitch) {
+	uint32_t ox = 0;
+	uint32_t oy = 0;
+	uint32_t ix = (w<<16) / FIXED_WIDTH;
+	uint32_t iy = (h<<16) / FIXED_HEIGHT;
+	
+	for (int y=0; y<FIXED_HEIGHT; y++) {
+		uint16_t* restrict src_row = (void*)src + (oy>>16) * pitch;
+		uint16_t* restrict dst_row = (void*)dst + y * dst_pitch;
+		for (int x=0; x<FIXED_WIDTH; x++) {
+			*dst_row = *(src_row + (ox>>16));
+			dst_row += 1;
+			ox += ix;
+		}
+		ox = 0;
+		oy += iy;
+	}
 }
 
 static void Menu_loop(void) {
