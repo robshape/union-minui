@@ -4271,7 +4271,7 @@ static void limitFF(void) {
 		if (last_time == 0) last_time = now;
 		int elapsed = now - last_time;
 		if (elapsed>0 && elapsed<0x80000) {
-			uint64_t ff_frame_time = 1000000 / (core.fps * (max_ff_speed + 1)); // TODO: define this only when max_ff_speed changes
+			uint64_t ff_frame_time = 1000000 / ((int) core.fps * (max_ff_speed + 1)); // TODO: define this only when max_ff_speed changes
 			if (elapsed<ff_frame_time) {
 				int delay = (ff_frame_time - elapsed) / 1000;
 				if (delay>0) {
