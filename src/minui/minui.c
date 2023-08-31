@@ -496,7 +496,10 @@ static int hasM3u(char* rom_path, char* m3u_path) { // NOTE: rom_path not dir_pa
   if (suffixMatch(".m3u", m3u_path)) {
     char dir_path[256];
     strcpy(dir_path, m3u_path);
-    tmp = strchr(dir_path, '.');
+    tmp = strrchr(dir_path, '.');
+    tmp[0] = '\0';
+    if (exists(dir_path)) return 1;
+    tmp = strrchr(dir_path, '/');
     tmp[0] = '\0';
     return exists(dir_path);
   }
