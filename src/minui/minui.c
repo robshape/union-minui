@@ -545,6 +545,7 @@ static int m3u_to_dir(char* m3u_path, char* dir_path) {
     return 1;
   }
   else {
+    tmp[0] = '\0';
     tmp = strrchr(dir_path, '/') + 1;
     tmp[0] = '\0';
     if (exists(dir_path)) {
