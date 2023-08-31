@@ -514,6 +514,7 @@ static int hasM3u(char* rom_path, char* m3u_path) { // NOTE: rom_path not dir_pa
   if (exists(m3u_path)) {
     return exists(m3u_path);
   }
+  tmp[0] = '\0';
 
 	// get parent directory name
 	char dir_name[256];
@@ -527,8 +528,32 @@ static int hasM3u(char* rom_path, char* m3u_path) { // NOTE: rom_path not dir_pa
 	// add extension
 	tmp = m3u_path + strlen(m3u_path);
 	strcpy(tmp, ".m3u");
+  tmp[4] = '\0';
 	
 	return exists(m3u_path);
+}
+
+static int m3u_to_dir(char* m3u_path, char* dir_path) {
+  if (!suffixMatch(".m3u", m3u_path)) {
+    return 0;
+  }
+  strcpy(dir_path,m3u_path);
+  char* tmp = strrchr(dir_path, '.');
+  tmp[0] = '/'; tmp[1] = '\0';
+  if (exists(dir_path)) {
+    // m3u is next to dir
+    return 1;
+  }
+  else {
+    tmp = strrchr(dir_path, '/') + 1;
+    tmp[0] = '\0';
+    if (exists(dir_path)) {
+      // m3u is in the dir
+      return 1;
+    }
+  }
+  dir_path[0] = '\0';
+  return 0;
 }
 
 static int hasRecents(void) {
@@ -566,12 +591,9 @@ static int hasRecents(void) {
 			if (exists(sd_path)) {
 				if (recents->count<MAX_RECENTS) {
 					// this logic replaces an existing disc from a multi-disc game with the last used
-					char m3u_path[256];
-					if (hasM3u(sd_path, m3u_path)) { // TODO: this might tank launch speed
+          if (suffixMatch(".m3u", sd_path)) {
 						char parent_path[256];
-						strcpy(parent_path, line);
-						char* tmp = strrchr(parent_path, '/') + 1;
-						tmp[0] = '\0';
+            m3u_to_dir(sd_path, parent_path);
 						
 						int found = 0;
 						for (int i=0; i<parent_paths->count; i++) {
