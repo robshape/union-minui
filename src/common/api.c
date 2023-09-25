@@ -90,6 +90,7 @@ static void ion_alloc(int fd_ion, ion_alloc_info_t* info) {
 static void ion_free(int fd_ion, ion_alloc_info_t* info) {
 	struct ion_handle_data	ihd;
 	munmap(info->vadd, info->size);
+	close(info->fd);
 	ihd.handle = (uintptr_t)info->handle;
 	if (ioctl(fd_ion, ION_IOC_FREE, &ihd)<0) fprintf(stderr, "ION_FREE failed %s\n",strerror(errno));
 	fflush(stdout);
@@ -1389,25 +1390,11 @@ static void POW_quitOverlay(void) {
 }
 
 int POW_readBatteryStatus(void) {
-	#define BATTERY_2100MAH 1
-	#define BATTERY_2600MAH 2
-	#define BATTERY_3500MAH 3
-	#define UNKNOWN 9
+	#define READ_VOLTAGE 1
 
-	int battery = UNKNOWN; // Default
-	int battery_txt = getInt(BATTERY_PATH);
-	if (battery_txt > 0) {
-		battery = battery_txt;
-	}
-
-	int voltage_now = getInt("/sys/class/power_supply/battery/voltage_now");
-
-	if (battery == BATTERY_2100MAH) {
+	if (READ_VOLTAGE > 0) {
+		int voltage_now = getInt("/sys/class/power_supply/battery/voltage_now");
 		return ((voltage_now / 10000) - 310); // 310-410
-	} else if (battery == BATTERY_2600MAH) {
-		return ((voltage_now / 10000) - 308); // 308-414? Seems incorrect...
-	} else if (battery == BATTERY_3500MAH) {
-		// ???-???
 	}
 
 	// Fallback
@@ -1549,8 +1536,9 @@ void POW_disablePowerOff(void) {
 }
 void POW_powerOff(void) {
 	if (pow.can_poweroff) {
+		GFX_resize(FIXED_WIDTH,FIXED_HEIGHT,FIXED_PITCH);
+
 		char* msg = exists(AUTO_RESUME_PATH) ? "Quicksave created,\npowering off" : "Powering off";
-		GFX_clear(gfx.screen);
 		GFX_blitMessage(font.large, msg, gfx.screen, NULL);
 		GFX_flip(gfx.screen);
 
