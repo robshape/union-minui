@@ -2,7 +2,8 @@
 # Shortcuts #
 #############
 
-| Description                      | Shortcut                     |
-| -------------------------------- | ---------------------------- |
-| Adjust brightness                | MENU + VOLUME_DOWN/VOLUME_UP |
-| Add/remove Favorites (from menu) | SELECT                       |
+| Description                           | Shortcut                     |
+| ------------------------------------- | ---------------------------- |
+| Adjust brightness                     | MENU + VOLUME_DOWN/VOLUME_UP |
+| Add/remove Favorites (in menu)        | SELECT                       |
+| Resume from last save state (in menu) | X                            |
