@@ -85,6 +85,7 @@ bundle:
 
 	# extras
 	cp ./cores/output/mame2003_plus_libretro.so ./build/EXTRAS/Emus/rg35xx/MAME.pak
+	cp ./cores/output/fake08_libretro.so ./build/EXTRAS/Emus/rg35xx/P8.pak
 	cp ./cores/output/mgba_libretro.so ./build/EXTRAS/Emus/rg35xx/MGBA.pak
 	cp ./cores/output/mgba_libretro.so ./build/EXTRAS/Emus/rg35xx/SGB.pak
 	cp ./cores/output/mednafen_pce_fast_libretro.so ./build/EXTRAS/Emus/rg35xx/PCE.pak
