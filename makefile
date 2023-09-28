@@ -67,6 +67,8 @@ bundle:
 	# populate system
 	cp ~/buildroot/output/images/rootfs.ext2 ./build/SYSTEM/rg35xx
 	cp ./src/dts/kernel.dtb ./build/SYSTEM/rg35xx/dat
+	cp ./src/ramdisk/patched-ramdisk.img ./build/SYSTEM/rg35xx/dat/ramdisk.img
+	cp ./src/ramdisk/charging.png ./build/SYSTEM/rg35xx/dat/
 	cp ./src/libmsettings/libmsettings.so ./build/SYSTEM/rg35xx/lib
 	cp ./src/keymon/keymon.elf ./build/SYSTEM/rg35xx/bin
 	cp ./src/minarch/minarch.elf ./build/SYSTEM/rg35xx/bin
