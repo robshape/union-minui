@@ -25,8 +25,8 @@ typedef struct Settings {
 } Settings;
 static Settings DefaultSettings = {
 	.version = SETTINGS_VERSION,
-	.brightness = 2,
-	.headphones = 4,
+	.brightness = 4,
+	.headphones = 8,
 	.speaker = 8,
 	.jack = 0,
 };
@@ -72,7 +72,7 @@ void InitSettings(void) {
 		// these shouldn't be persisted
 		// settings->jack = 0;
 	}
-	printf("brightness: %i\nspeaker: %i \n", settings->brightness, settings->speaker);
+	printf("brightness: %i\nspeaker: %i \nheadphones: %i \n", settings->brightness, settings->speaker, settings->headphones);
 	
 	SetVolume(GetVolume());
 	SetBrightness(GetBrightness());
