@@ -56,12 +56,9 @@ if [ ! -f $FLAG_PATH ] || was_updated; then
 	cp $SYSTEM_PATH/dat/kernel.dtb /misc
 	cp $SYSTEM_PATH/dat/ramdisk.img /misc
 
-	# boot logo, only installed, never updated
+	# graphics are only installed, never updated
 	if [ ! -f $FLAG_PATH ]; then
 		cp $SYSTEM_PATH/dat/boot_logo.bmp.gz /misc
-	fi
-	# charging graphic, same
-	if [ ! -f $SYSTEM_PATH/dat/charging.png ]; then
 		cp $SYSTEM_PATH/dat/charging.png /misc
 	fi
 
