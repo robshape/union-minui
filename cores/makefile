@@ -22,11 +22,13 @@ beetle-vb_CORE = mednafen_vb_libretro.so
 fake-08_REPO = https://github.com/jtothebell/fake-08
 fake-08_CORE = fake08_libretro.so
 fake-08_BUILD_PATH = fake-08/platform/libretro
-fake-08_HASH = 6279216964e351409201e987653e3d708fd4ad78 # last known working save states
+fake-08_HASH = 6279216 # last known working save states
 
 fceumm_REPO = https://github.com/libretro/libretro-fceumm
 
 gambatte_REPO = https://github.com/libretro/gambatte-libretro
+
+gpsp_HASH = 1d1c719 # last known working save states
 
 mednafen_supafaust_REPO = https://github.com/libretro/supafaust
 
