@@ -423,6 +423,55 @@ static void SRAM_write(void) {
 
 ///////////////////////////////////////
 
+static void RTC_getPath(char* filename) {
+	sprintf(filename, "%s/%s.rtc", core.saves_dir, game.name);
+}
+static void RTC_read(void) {
+	size_t rtc_size = core.get_memory_size(RETRO_MEMORY_RTC);
+	if (!rtc_size) return;
+	
+	char filename[MAX_PATH];
+	RTC_getPath(filename);
+	printf("rtc path (read): %s\n", filename);
+	
+	FILE *rtc_file = fopen(filename, "r");
+	if (!rtc_file) return;
+
+	void* rtc = core.get_memory_data(RETRO_MEMORY_RTC);
+
+	if (!rtc || !fread(rtc, 1, rtc_size, rtc_file)) {
+		LOG_error("Error reading RTC data\n");
+	}
+
+	fclose(rtc_file);
+}
+static void RTC_write(void) {
+	size_t rtc_size = core.get_memory_size(RETRO_MEMORY_RTC);
+	if (!rtc_size) return;
+	
+	char filename[MAX_PATH];
+	RTC_getPath(filename);
+	printf("rtc path (write) size(%u): %s\n", rtc_size, filename);
+		
+	FILE *rtc_file = fopen(filename, "w");
+	if (!rtc_file) {
+		LOG_error("Error opening RTC file: %s\n", strerror(errno));
+		return;
+	}
+
+	void *rtc = core.get_memory_data(RETRO_MEMORY_RTC);
+
+	if (!rtc || rtc_size != fwrite(rtc, 1, rtc_size, rtc_file)) {
+		LOG_error("Error writing RTC data to file\n");
+	}
+
+	fclose(rtc_file);
+
+	sync();
+}
+
+///////////////////////////////////////
+
 static int state_slot = 0;
 static void State_getPath(char* filename) {
 	sprintf(filename, "%s/%s.st%i", core.config_dir, game.name, state_slot);
@@ -2779,6 +2828,7 @@ void Core_load(void) {
 	core.load_game(&game_info);
 	
 	SRAM_read();
+	RTC_read();
 	
 	// NOTE: must be called after core.load_game!
 	struct retro_system_av_info av_info = {};
@@ -2801,6 +2851,7 @@ void Core_unload(void) {
 void Core_quit(void) {
 	if (core.initialized) {
 		SRAM_write();
+		RTC_write();
 		core.unload_game();
 		core.deinit();
 		core.initialized = 0;
@@ -2893,6 +2944,7 @@ void Menu_quit(void) {
 }
 void Menu_beforeSleep(void) {
 	SRAM_write();
+	RTC_write();
 	State_autosave();
 	putFile(AUTO_RESUME_PATH, game.path + strlen(SDCARD_PATH));
 	POW_setCPUSpeed(CPU_SPEED_MENU);
@@ -3711,6 +3763,7 @@ static void Menu_loop(void) {
 	}
 	
 	SRAM_write();
+	RTC_write();
 	POW_warn(0);
 	POW_setCPUSpeed(CPU_SPEED_MENU); // set Hz directly
 	GFX_setVsync(VSYNC_STRICT);
