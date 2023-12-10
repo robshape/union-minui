@@ -15,7 +15,7 @@ endif
 #BUILD_HASH!=git rev-parse --short HEAD
 BUILD_HASH=HEAD
 
-RELEASE_TIME!=date +%Y%m%d
+RELEASE_TIME!=TZ=GMT date +%Y%m%d
 RELEASE_BASE=FinUI-$(RELEASE_TIME)b
 RELEASE_DOT!=find ./releases/. -regex ".*/$(RELEASE_BASE)-[0-9]+-base\.zip" -printf '.' | wc -m
 RELEASE_NAME=$(RELEASE_BASE)-$(RELEASE_DOT)
