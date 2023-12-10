@@ -408,6 +408,7 @@ static Array* favorites; // FavoriteArray
 static int quit = 0;
 static int can_resume = 0;
 static int should_resume = 0; // set to 1 on BTN_RESUME but only if can_resume==1
+static int simple_mode = 0;
 static char slot_path[256];
 
 static int restore_depth = -1;
@@ -728,7 +729,7 @@ static Array* getRoot(void) {
 	Array_free(entries); // root now owns entries' entries
 	
 	char* tools_path = SDCARD_PATH "/Tools/" PLATFORM;
-	if (exists(tools_path)) Array_push(root, Entry_new(tools_path, ENTRY_DIR));
+	if (exists(tools_path) && !simple_mode) Array_push(root, Entry_new(tools_path, ENTRY_DIR));
 	
 	return root;
 }
@@ -1284,6 +1285,8 @@ static void Menu_quit(void) {
 int main (int argc, char *argv[]) {
 	if (autoResume()) return 0; // nothing to do
 	
+	simple_mode = exists(SIMPLE_MODE_PATH);
+
 	LOG_info("FinUI\n");
 	InitSettings();
 	

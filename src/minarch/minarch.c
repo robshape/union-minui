@@ -26,6 +26,7 @@
 static SDL_Surface* screen;
 static int quit;
 static int show_menu;
+static int simple_mode = 0;
 
 enum {
 	SCALE_NATIVE,
@@ -2880,7 +2881,8 @@ enum {
 	STATUS_LOAD = 11,
 	STATUS_OPTS = 23,
 	STATUS_DISC = 24,
-	STATUS_QUIT = 30
+	STATUS_QUIT = 30,
+	STATUS_RESET= 31,
 };
 
 static struct {
@@ -3785,6 +3787,8 @@ static void Menu_loop(void) {
 	getEmuName(game.path, emu_name);
 	sprintf(minui_dir, USERDATA_PATH "/.minui/%s", emu_name);
 	mkdir(minui_dir, 0755);
+
+	if (simple_mode) menu.items[ITEM_OPTS] = "Reset";
 	
 	int rom_disc = -1;
 	int disc = rom_disc;
@@ -3961,8 +3965,14 @@ static void Menu_loop(void) {
 				}
 				break;
 				case ITEM_OPTS:
-					Menu_options(&options_menu);
-					dirty = 1;
+					if (simple_mode) {
+						core.reset();
+						status = STATUS_RESET;
+						show_menu = 0;
+					} else {
+						Menu_options(&options_menu);
+						dirty = 1;
+					}
 				break;
 				case ITEM_QUIT:
 					status = STATUS_QUIT;
@@ -4241,6 +4251,8 @@ int main(int argc , char* argv[]) {
 	Core_open(core_path, tag_name);
 	Game_open(rom_path);
 	if (!game.is_open) goto finish;
+
+	simple_mode = exists(SIMPLE_MODE_PATH);
 	
 	// restore options
 	Config_load();
