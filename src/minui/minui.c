@@ -494,6 +494,16 @@ static int hasM3u(char* rom_path, char* m3u_path) { // NOTE: rom_path not dir_pa
 	char* tmp;
 	
 	strcpy(m3u_path, rom_path);
+  if (suffixMatch(".m3u", m3u_path)) {
+    char dir_path[256];
+    strcpy(dir_path, m3u_path);
+    tmp = strrchr(dir_path, '.');
+    tmp[0] = '\0';
+    if (exists(dir_path)) return 1;
+    tmp = strrchr(dir_path, '/');
+    tmp[0] = '\0';
+    return exists(dir_path);
+  }
 	tmp = strrchr(m3u_path, '/') + 1;
 	tmp[0] = '\0';
 	
@@ -504,6 +514,12 @@ static int hasM3u(char* rom_path, char* m3u_path) { // NOTE: rom_path not dir_pa
 	tmp = strrchr(m3u_path, '/');
 	tmp[0] = '\0';
 	
+  strcpy(tmp, ".m3u");
+  if (exists(m3u_path)) {
+    return exists(m3u_path);
+  }
+  tmp[0] = '\0';
+
 	// get parent directory name
 	char dir_name[256];
 	tmp = strrchr(m3u_path, '/');
@@ -516,8 +532,33 @@ static int hasM3u(char* rom_path, char* m3u_path) { // NOTE: rom_path not dir_pa
 	// add extension
 	tmp = m3u_path + strlen(m3u_path);
 	strcpy(tmp, ".m3u");
+  tmp[4] = '\0';
 	
 	return exists(m3u_path);
+}
+
+static int m3u_to_dir(char* m3u_path, char* dir_path) {
+  if (!suffixMatch(".m3u", m3u_path)) {
+    return 0;
+  }
+  strcpy(dir_path,m3u_path);
+  char* tmp = strrchr(dir_path, '.');
+  tmp[0] = '/'; tmp[1] = '\0';
+  if (exists(dir_path)) {
+    // m3u is next to dir
+    return 1;
+  }
+  else {
+    tmp[0] = '\0';
+    tmp = strrchr(dir_path, '/') + 1;
+    tmp[0] = '\0';
+    if (exists(dir_path)) {
+      // m3u is in the dir
+      return 1;
+    }
+  }
+  dir_path[0] = '\0';
+  return 0;
 }
 
 static int hasRecents(void) {
@@ -555,12 +596,9 @@ static int hasRecents(void) {
 			if (exists(sd_path)) {
 				if (recents->count<MAX_RECENTS) {
 					// this logic replaces an existing disc from a multi-disc game with the last used
-					char m3u_path[256];
-					if (hasM3u(sd_path, m3u_path)) { // TODO: this might tank launch speed
+          if (suffixMatch(".m3u", sd_path)) {
 						char parent_path[256];
-						strcpy(parent_path, line);
-						char* tmp = strrchr(parent_path, '/') + 1;
-						tmp[0] = '\0';
+            m3u_to_dir(sd_path, parent_path);
 						
 						int found = 0;
 						for (int i=0; i<parent_paths->count; i++) {
@@ -860,6 +898,7 @@ static void addEntries(Array* entries, char* path) {
 		tmp = full_path + strlen(full_path);
 		while((dp = readdir(dh)) != NULL) {
 			if (hide(dp->d_name)) continue;
+      if (suffixMatch(".m3u", dp->d_name)) continue;
 			strcpy(tmp, dp->d_name);
 			int is_dir = dp->d_type==DT_DIR;
 			int type;
@@ -900,17 +939,15 @@ static Array* getEntries(char* path){
 	Array* entries = Array_new();
 
 	if (isConsoleDir(path)) { // top-level console folder, might collate
-		char collated_path[256];
-		strcpy(collated_path, path);
-		char* tmp = strrchr(collated_path, '(');
-		// 1 because we want to keep the opening parenthesis to avoid collating "Game Boy Color" and "Game Boy Advance" into "Game Boy"
-		// but conditional so we can continue to support a bare tag name as a folder name
-		if (tmp) tmp[1] = '\0'; 
+		char display_name[256];
+    getDisplayName(path, display_name);
 		
 		DIR *dh = opendir(ROMS_PATH);
 		if (dh!=NULL) {
 			struct dirent *dp;
 			char full_path[256];
+      char other_display_name[256];
+      char* tmp;
 			sprintf(full_path, "%s/", ROMS_PATH);
 			tmp = full_path + strlen(full_path);
 			// while loop so we can collate paths, see above
@@ -918,8 +955,9 @@ static Array* getEntries(char* path){
 				if (hide(dp->d_name)) continue;
 				if (dp->d_type!=DT_DIR) continue;
 				strcpy(tmp, dp->d_name);
+        getDisplayName(dp->d_name, other_display_name);
 			
-				if (!prefixMatch(collated_path, full_path)) continue;
+				if (!prefixMatch(display_name, other_display_name)) continue;
 				addEntries(entries, full_path);
 			}
 			closedir(dh);
@@ -1097,7 +1135,14 @@ static void openRom(char* path, char* last) {
 				if (disc_path[0]=='/') strcpy(sd_path, disc_path); // absolute
 				else { // relative
 					strcpy(sd_path, m3u_path);
-					char* tmp = strrchr(sd_path, '/') + 1;
+          char* tmp = strrchr(sd_path, '.');
+          tmp[0]='/';
+          tmp+=1;
+          if (exists(sd_path)) {
+          }
+          else {
+            tmp = strrchr(sd_path, '/') + 1;
+          }
 					strcpy(tmp, disc_path);
 				}
 			}
@@ -1128,6 +1173,16 @@ static void openDirectory(char* path, int auto_launch) {
 	strcpy(m3u_path, auto_path);
 	char* tmp = strrchr(m3u_path, '.') + 1; // extension
 	strcpy(tmp, "m3u"); // replace with m3u
+	if (exists(m3u_path) && auto_launch) {
+		auto_path[0] = '\0';
+		if (getFirstDisc(m3u_path, auto_path)) {
+			openRom(auto_path, path);
+			return;
+		}
+		// TODO: doesn't handle empty m3u files
+	}
+	tmp = strrchr(m3u_path, '/'); // extension
+	strcpy(tmp, ".m3u"); // replace with m3u
 	if (exists(m3u_path) && auto_launch) {
 		auto_path[0] = '\0';
 		if (getFirstDisc(m3u_path, auto_path)) {
