@@ -32,6 +32,7 @@ gpsp_HASH = 1d1c719 # last known working save states
 mednafen_supafaust_REPO = https://github.com/libretro/supafaust
 
 pcsx_rearmed_MAKEFILE = Makefile.libretro
+pcsx_rearmed_HASH = e2fb138 # last known working build
 
 picodrive_REPO = https://github.com/irixxxx/picodrive
 picodrive_MAKEFILE = Makefile.libretro
