@@ -4291,16 +4291,18 @@ int main(int argc , char* argv[]) {
 	
 	Menu_init();
 	
-	State_resume();
-	
 	POW_warn(1);
 	POW_disableAutosleep();
 	sec_start = SDL_GetTicks();
+  core.run();
+  State_resume();
+
 	while (!quit) {
 		GFX_startFrame();
 		
 		core.run();
 		limitFF();
+
 		
 		if (show_menu) Menu_loop();
 		
